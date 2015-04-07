@@ -14,10 +14,13 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+	// protected $template ='template/main'; 
 
-	public function showWelcome()
+	public function index()
 	{
-		return View::make('hello');
+		
+		return View::make('home/main')->withTitle('');
+
 	}
 
 	public function cari()
@@ -29,17 +32,22 @@ class HomeController extends BaseController {
 			$data = [
 				'data'=>$data
 			];
-			return View::make('pencarian/index',$data);
+			// return View::make('pencarian/index',$data);
 		}else{
 
 			$data = Home::where('penulis','LIKE',$keyword)->get();
 			$data = [
 				'data'=>$data
 			];
-
 			
-			return View::make('pencarian/index',$data);
 		}
+
+		return View::make('pencarian/index',$data)->withTitle('pencarian');
+	} //end func cari()
+
+	public function keranjang()
+	{
+		return View::make('keranjang/index')->withTitle('Keranjang');	
 	}
 
-}
+} //end class home
