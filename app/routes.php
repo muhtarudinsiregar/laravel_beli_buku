@@ -16,10 +16,15 @@
 // 	return View::make('hello');
 // });
 
+
+// route untuk menampilkan hasil pencarian
 Route::get('cari','HomeController@cari');
 
+// route untuk crud  buku dengan resource
 Route::resource('buku', 'BukuController');
 
+//route halaman utama 
 Route::get('/','HomeController@index');
 
+//route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');
