@@ -5,7 +5,7 @@
 	class Home extends Eloquent
 	{
 		
-		protected $table = 'buku';
+		// protected $table = 'buku';
 	}
 
  ?>

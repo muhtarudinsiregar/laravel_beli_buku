@@ -11,7 +11,15 @@ class BukuController extends \BaseController {
 
 	public function index()
 	{
-		//
+		$data = DB::table('penulis AS p')
+		->join('buku AS b','p.id_pen','=','b.id_pen')
+		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
+		->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori')
+		->get();
+		$data = array(
+			'data'=>$data
+			);
+		return View::make('buku.list', $data)->withTitle('List Buku');
 	}
 
 
@@ -23,8 +31,14 @@ class BukuController extends \BaseController {
 	public function create()
 	{
 		// $this->layout->content = 
-		
-		return View::make('buku.create')->withTitle('Tambah Buku');
+		$kategori = DB::table('kategori')->get();
+		$penulis = DB::table('penulis')->get();
+		$data = array(
+			'kategori'=>$kategori,
+			'penulis'=>$penulis
+			);
+
+		return View::make('buku.create',$data)->withTitle('Tambah Buku');
 		
 	}
 
@@ -36,8 +50,26 @@ class BukuController extends \BaseController {
 	 */
 	public function store()
 	{
-		$data = Input::all();
-		$data= Input::get('as');
+		// echo "string";
+		// var_dump(Input::all());	
+		// memasukkkan data ke tabel dgn autorincreament id
+		DB::table('buku')->insert(
+			array(
+				'judul' => Input::get('judul'),
+				'harga' => Input::get('harga'),
+				'id_pen' => Input::get('penulis'),
+				'id_ktgr' => Input::get('kategori'),
+				'tahun' => Input::get('tahun'),
+				'gambar' => "Pic",
+				'deskripsi' => Input::get('deskripsi')
+
+			)
+		);
+
+
+
+
+		return Redirect::to('buku.create');
 
 
 	}
@@ -52,6 +84,7 @@ class BukuController extends \BaseController {
 	public function show($id)
 	{
 		//
+		// echo "stringaaa";
 	}
 
 
@@ -63,7 +96,26 @@ class BukuController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$buku = DB::table('penulis AS p')
+		->join('buku AS b','p.id_pen','=','b.id_pen')
+		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
+		->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori')
+		->where('b.id_bk',$id)
+		->first();
+		// $buku = DB::table('buku')->where('id_bk',$id)->get();
+		// var_dump($buku);
+		$kategori = DB::table('kategori')->get();
+		$penulis = DB::table('penulis')->get();
+		
+		$data = array(
+			'buku'=>$buku,
+			'kategori'=>$kategori,
+			'penulis'=>$penulis,
+			);
+
+
+		// var_dump($data);
+		return View::make('buku.edit',$data)->withTitle('Edit Buku');
 	}
 
 
@@ -75,7 +127,11 @@ class BukuController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		DB::table('buku')
+            ->where('id_bk', $id)
+            ->update(array('votes' => 1));
+
+
 	}
 
 
@@ -87,7 +143,7 @@ class BukuController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		DB::table('buku')->where('id_bk', '=', 100)->delete();
 	}
 
 

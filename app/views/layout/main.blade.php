@@ -25,27 +25,27 @@
             <div class="navbar-collapse collapse" id="searchbar">
                 <ul class="nav navbar-nav navbar-left">
                     <li id="userPage" class="custom-cari">
-                         <li><a href="#">Pencarian</a></li>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Daftar</a></li>
-                    <li><a href="about.html">Login</a></li>
-                    <li><a href="{{ URL::to('keranjang') }}" class ='span-left'><i class="fa fa-shopping-cart"></i> Keranjang</a></li>
-                </ul>
-                <!-- <form class="navbar-form"> -->
-                <?php echo Form::open(array('url'=>'cari','class'=>'navbar-form','method'=>'GET'))?>
-                <div class="form-group" style="display:inline;">
-                    <div class="input-group" style="display:table;">
-                        <input class="form-control" id="keyword" name="search" placeholder="Judul, Pengarang" autocomplete="off" autofocus="autofocus" type="text">
-                        <span class="input-group-btn" style="width:1%">
+                       <li><a href="#">Pencarian</a></li>
+                   </li>
+               </ul>
+               <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Daftar</a></li>
+                <li><a href="about.html">Login</a></li>
+                <li><a href="{{ URL::to('keranjang') }}" class ='span-left'><i class="fa fa-shopping-cart"></i> Keranjang</a></li>
+            </ul>
+            <!-- <form class="navbar-form"> -->
+            <?php echo Form::open(array('url'=>'cari','class'=>'navbar-form','method'=>'GET'))?>
+            <div class="form-group" style="display:inline;">
+                <div class="input-group" style="display:table;">
+                    <input class="form-control" id="keyword" name="search" placeholder="Judul, Pengarang" autocomplete="off" autofocus="autofocus" type="text">
+                      {{--   <span class="input-group-btn" style="width:1%">
                             <select class="form-control" name="kategori">
                               <option value="0">Semua Kategori</option>
                               <option value="1">Lorem ipsum </option>
                               <option value="2">Lorem ipsum </option>
                             
                           </select>
-                      </span>
+                      </span> --}}
                       <span class="input-group-btn" style="width:1%;">
                         <button type="submit" class="btn btn-success" type="button">  <span class="glyphicon glyphicon-search"></span></button>
                     </span>
@@ -73,5 +73,17 @@
 
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script>
+    $('#profiles').keyup(function () {
+        var max = 250;
+      var len = $(this).val().length;
+      if (len >= max) {
+        $('#charNum').text(' you have reached the limit');
+    } else {
+        var char = max - len;
+        $('#charNum').text(char + ' characters left');
+    }
+});
+</script>
 </body>
 </html>

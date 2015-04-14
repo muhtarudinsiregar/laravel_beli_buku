@@ -32,43 +32,36 @@ class HomeController extends BaseController {
 	public function cari()
 	{
 		$keyword = Input::get('search');
-		$kategori = Input::get('kategori');
 
 		if (empty($keyword)) {
-			$data = DB::table('buku')->get();
-			
-			
+			$data = DB::table('buku AS b')
+			->join('penulis AS p','b.id_pen','=','p.id_pen')
+			->select('b.id_bk','b.harga','b.judul','b.gambar','p.nama')
+			->take(10)
+			->get();
 		}else{
 
-			if ($kategori==0) {
-				// ketika kategori 0 atau semua kategori maka cari semua buku
-				$data = DB::table('buku')
-				->select('id','judul','harga','gambar','penulis')				
-				->where('judul', 'LIKE', '%'.$keyword.'%')
-				->orWhere('penulis','LIKE','%'.$keyword.'%')
-				->get();
+			// fungsi cari buku berdasarkan nama penulis dan judul menggunakan query builder
 
-			}
-			else{
-				// ketika kategori bukan 0 maka tampilkan judul, harga, penulis dan id dimana kategori = $kategori kemudian
-				// menggunakan subquery menjadi and (where judul like $keyword or penulis like $keyword
-				// sql select judul,harga,buku,gambar from buku where kategori_id=2 and (judul like '%radit%'  or penulis  like '%radit%')
-				
-				$data = DB::table('buku')
-				->select('id','judul','harga','penulis','gambar')
-				->where('kategori_id','=',$kategori)
-				->where(function($query){
-					$keyword = Input::get('search');
-					$query->where('judul', 'LIKE', '%'.$keyword.'%')
-						  ->orWhere('penulis','LIKE','%'.$keyword.'%');
-				})
-				->get();
-			}	
+			$data = DB::table('buku AS b')
+					->join('penulis AS p','b.id_pen','=','p.id_pen')
+					->where('judul', 'LIKE', '%'.$keyword.'%')
+					->orWhere('p.nama','LIKE','%'.$keyword.'%')
+					->select('id_bk','judul','harga','gambar','p.nama')
+					->get();
+
+			// pencarian menggunakan raw query
+
+			// $data = DB::select("select id_bk,judul,harga,gambar,p.nama from buku as b 
+			// 	join penulis as p 
+			// 	on(b.id_pen=p.id_pen) where judul like '%$keyword%' or p.nama like '%$keyword%'");
 		}
+		// var_dump($data);
 		$data = [
-			'data'=>$data
-			];
+		'data'=>$data
+		];
 
+		// var_dump($data);
 		return View::make('pencarian/index',$data)->withTitle('Pencarian');
 	} //end func cari()
 

@@ -25,6 +25,9 @@ Route::resource('buku', 'BukuController');
 
 //route halaman utama 
 Route::get('/','HomeController@index');
+// route untuk penulis
+Route::resource('penulis','PenulisController');
 
+Route::resource('kategori', 'Kategoricontroller');
 //route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');

@@ -11,7 +11,7 @@
 		Lorem ipsum dolor sit amet.	
 	</div>
 	<div class="col-lg-9">
-		{{ Form::open(array('url'=>'buku','class'=>'form-horizontal','method'=>'POST')) }}
+		{{ Form::model($buku,array('url'=>route('buku.update',['buku'=>$buku->id_bk]),'class'=>'form-horizontal','method'=>'PUT')) }}
 		<div class="form-group">
 			<label for="inputEmail3" class="col-sm-2 control-label" name="Nama">Judul</label>
 			<div class="col-lg-9 col-lg-offset-1">
