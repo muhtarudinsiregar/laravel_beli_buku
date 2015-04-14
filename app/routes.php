@@ -16,6 +16,9 @@
 // 	return View::make('hello');
 // });
 
+Route::group(array('before'=>'auth'),function(){
+
+
 
 // route untuk menampilkan hasil pencarian
 Route::get('cari','HomeController@cari');
@@ -29,5 +32,10 @@ Route::get('/','HomeController@index');
 Route::resource('penulis','PenulisController');
 
 Route::resource('kategori', 'Kategoricontroller');
+});
 //route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');
+Route::get('login','LoginController@index');
+Route::post('proses','LoginController@proses');
+Route::get('logout','LoginController@logout');
+Route::get('daftar','LoginController@daftar');

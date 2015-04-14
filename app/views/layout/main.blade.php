@@ -30,7 +30,7 @@
                </ul>
                <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Daftar</a></li>
-                <li><a href="about.html">Login</a></li>
+                <li><a href="{{ URL::to('login') }}">Login</a></li>
                 <li><a href="{{ URL::to('keranjang') }}" class ='span-left'><i class="fa fa-shopping-cart"></i> Keranjang</a></li>
             </ul>
             <!-- <form class="navbar-form"> -->
