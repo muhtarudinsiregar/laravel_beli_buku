@@ -35,7 +35,13 @@ Route::resource('kategori', 'Kategoricontroller');
 });
 //route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');
+//route menampilkan halaman login
 Route::get('login','LoginController@index');
+//route untuk autentifikasi user
 Route::post('proses','LoginController@proses');
+// route logout
 Route::get('logout','LoginController@logout');
+// menampilkan halaman pendaftaran
 Route::get('daftar','LoginController@daftar');
+// otentifikasi pendaftaran
+Route::post('store','LoginController@store');

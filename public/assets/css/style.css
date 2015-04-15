@@ -1,3 +1,6 @@
+ul.square{
+  list-style-type: square;
+}
 .navbar-custom {
 	background-color:#0B8185;
     color:#FFC48C;
