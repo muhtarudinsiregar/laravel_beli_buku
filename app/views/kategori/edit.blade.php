@@ -16,7 +16,7 @@
 			Lorem ipsum dolor sit amet.
 		</div>
 		<div class="col-lg-9">
-			{{ Form::model($kategori,array('route'=>array('kategori.update',$kategori->id_ktgr),'class'=>'form-horizontal','method'=>'PUT')) }}
+			{{ Form::model($kategori,array('route'=>array('admin.kategori.update',$kategori->id_ktgr),'class'=>'form-horizontal','method'=>'PUT')) }}
 			<div class="form-group">
 				<label for="inputEmail3" class="col-lg-2 control-label" name="Nama">Nama Kategori</label>
 				<div class="col-lg-9 col-lg-offset-1">

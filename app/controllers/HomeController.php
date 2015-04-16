@@ -65,6 +65,18 @@ class HomeController extends BaseController {
 		return View::make('pencarian/index',$data)->withTitle('Pencarian');
 	} //end func cari()
 
+	public function show($id)
+	{	
+		$data = DB::table('buku AS b')
+					->join('penulis AS p','b.id_pen','=','p.id_pen')
+					->where('id_bk', '=',$id)
+					->select('id_bk','judul','harga','gambar','p.nama')
+					->first();
+		$data = [
+			'data'=>$data
+		];
+		return View::make('home/show',$data)->withTitle('Buku');
+	}
 	public function keranjang()
 	{
 		return View::make('keranjang/index')->withTitle('Keranjang');	

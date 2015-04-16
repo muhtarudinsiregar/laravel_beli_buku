@@ -42,7 +42,7 @@ class PenulisController extends \BaseController {
 				'profil'=>Input::get('profil')
 			));
 
-		return Redirect::to('penulis/create');
+		return Redirect::to('admin/penulis/create');
 	}
 
 
@@ -91,7 +91,7 @@ class PenulisController extends \BaseController {
 				'profil'=>Input::get('profil')
 				));
 		Session::flash('message', 'Data Berhasil Berhasil Diperbarui');
-		return Redirect::to('penulis/'.$id.'/edit');
+		return Redirect::to('admin/penulis/'.$id.'/edit');
 	}
 
 
@@ -104,7 +104,7 @@ class PenulisController extends \BaseController {
 	public function destroy($id)
 	{
 		DB::table('penulis')->where('id_pen',$id)->delete();
-		return Redirect::to('penulis');
+		return Redirect::to('admin/penulis');
 	}
 
 

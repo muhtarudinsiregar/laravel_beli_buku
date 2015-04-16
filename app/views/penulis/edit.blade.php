@@ -16,7 +16,7 @@
 		Lorem ipsum dolor sit amet.
 	</div>
 	<div class="col-lg-9">
-		{{ Form::model($penulis,array('route'=>array('penulis.update',$penulis->id_pen),'class'=>'form-horizontal','method'=>'PUT')) }}
+		{{ Form::model($penulis,array('route'=>array('admin.penulis.update',$penulis->id_pen),'class'=>'form-horizontal','method'=>'PUT')) }}
 
 		<div class="form-group">
 			<label for="inputEmail3" class="col-lg-2 control-label" name="Nama">Nama Penulis</label>

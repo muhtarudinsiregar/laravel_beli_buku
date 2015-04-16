@@ -20,9 +20,9 @@
 						<td> {{ $value->nama }} </td>
 						<td>
 							
-							{{ Form::open(array('url'=>route('kategori.destroy',$value->id_ktgr),'method'=>'delete','class'=>'form-inline')) }}
+							{{ Form::open(array('url'=>route('admin.kategori.destroy',$value->id_ktgr),'method'=>'delete','class'=>'form-inline')) }}
+							<a href="{{ URL::to('admin/kategori/'.$value->id_ktgr.'/edit') }}" class="btn btn-primary">Ubah</a>
 								{{ Form::submit('Hapus', array('class'=>'btn btn-danger')) }}
-							<a href="{{ URL::to('kategori/'.$value->id_ktgr.'/edit') }}" class="btn btn-primary">Ubah</a>
 							{{ Form::close() }}
                         	{{-- <a href="{{ URL::to('kategori/'.$value->id_ktgr) }}" class="btn btn-primary">Hapus</a> --}}
 						</td>

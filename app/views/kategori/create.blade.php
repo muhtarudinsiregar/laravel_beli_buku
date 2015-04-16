@@ -4,12 +4,20 @@
 	<h2>Tambah Kategori</h2>
 </div>
 <div class="row">
+	<div class="col-lg-offset-3 div col-lg-9">
+		@if (Session::has('message'))
+		<div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
+
+		@endif
+	</div>
+</div>	
+<div class="row">
 	<div class="col-lg-3">
 		Lorem ipsum dolor sit amet.
 	</div>
 
 	<div class="col-lg-9">
-		{{ Form::open(array('url'=>'kategori','class'=>'form-horizontal','method'=>'POST')) }}
+		{{ Form::open(array('url'=>'admin/kategori','class'=>'form-horizontal','method'=>'POST')) }}
 
 		<div class="form-group">
 			<label for="inputEmail3" class="col-lg-2 control-label" name="Nama">Nama Kategori</label>

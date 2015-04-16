@@ -16,23 +16,23 @@
 // 	return View::make('hello');
 // });
 
-Route::group(array('before'=>'auth'),function(){
-
-
-
 // route untuk menampilkan hasil pencarian
 Route::get('cari','HomeController@cari');
-
-// route untuk crud  buku dengan resource
-Route::resource('buku', 'BukuController');
-
 //route halaman utama 
 Route::get('/','HomeController@index');
-// route untuk penulis
-Route::resource('penulis','PenulisController');
 
-Route::resource('kategori', 'Kategoricontroller');
-});
+Route::group(array('before'=>'auth'),function(){
+	//route dengan prefix admin hanya boleh dimasuki oleh admin lalu terdapat filter hanya admin yang boleh masuk.
+	Route::group(array('prefix'=>'admin','before'=>'admin'), function(){
+		// route untuk crud  buku dengan resource
+		Route::resource('buku', 'BukuController');
+// route untuk penulis
+		Route::resource('penulis','PenulisController');
+// route untuk kategori 
+		Route::resource('kategori', 'Kategoricontroller');
+	}); //end group admin dan filter
+
+}); //end group auth
 //route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');
 //route menampilkan halaman login
@@ -45,3 +45,7 @@ Route::get('logout','LoginController@logout');
 Route::get('daftar','LoginController@daftar');
 // otentifikasi pendaftaran
 Route::post('store','LoginController@store');
+
+Route::get('home/show/{id}',array('as'=>'tampil','uses'=>'HomeController@show'));
+
+Route::resource('keranjang', 'keranjangController');

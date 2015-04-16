@@ -11,11 +11,11 @@
 		Lorem ipsum dolor sit amet.	
 	</div>
 	<div class="col-lg-9">
-		{{ Form::model($buku,array('url'=>route('buku.update',['buku'=>$buku->id_bk]),'class'=>'form-horizontal','method'=>'PUT')) }}
+		{{ Form::model($buku,array('url'=>route('admin.buku.update',['buku'=>$buku->id_bk]),'class'=>'form-horizontal','method'=>'PUT')) }}
 		<div class="form-group">
 			<label for="inputEmail3" class="col-sm-2 control-label" name="Nama">Judul</label>
 			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="judul" class="form-control input-sm" placeholder="Judul">
+				{{ Form::text('judul', null, array('class' => 'form-control')) }}
 			</div>
 		</div>
 		<div class="form-group">

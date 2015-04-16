@@ -23,7 +23,13 @@
 						<td> {{ $value->penulis }} </td>
 						<td> {{ $value->kategori }} </td>
 						<td> {{ $value->tahun }} </td>
-						<td> {{ link_to('buku/'.$value->id_bk.'/edit') }}</td>
+						<td> 
+							{{ Form::open(array('url'=>route('admin.buku.destroy',$value->id_bk),'method'=>'delete','class'=>'form-inline')) }}
+							<a href="{{ URL::to('admin/buku/'.$value->id_bk.'/edit') }}" class="btn btn-primary">Ubah</a>
+								{{ Form::submit('Hapus', array('class'=>'btn btn-danger')) }}
+							{{ Form::close() }}
+
+						</td>
 					</tr>
 				@endforeach
 				</tbody>

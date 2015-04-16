@@ -19,9 +19,9 @@
 						<td> {{ $no++ }} </td>
 						<td> {{ $value->nama }} </td>
 						<td>
-							{{ Form::open(array('url'=>route('penulis.destroy',$value->id_pen),'method'=>'delete','class'=>'form-inline')) }}
-								<a href="{{ URL::to('penulis/'.$value->id_pen.'/edit') }}" class="btn btn-primary">Ubah</a>
-								{{ Form::submit('Hapus', array('class'=>'btn btn-danger')) }}
+							{{ Form::open(array('url'=>route('admin.penulis.destroy',$value->id_pen),'method'=>'delete','class'=>'form-inline')) }}
+								<a href="{{ URL::to('admin/penulis/'.$value->id_pen.'/edit') }}" class="btn btn-primary">Ubah</a>
+								{{ Form::submit('Hapus', array('class'=>'btn btn-danger','type'=>'reset')) }}
 							{{ Form::close() }}
 						</td>
 

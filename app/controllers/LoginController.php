@@ -75,9 +75,9 @@ class LoginController extends \BaseController {
 			// DB::table('users')->where('email',Input::get('email'))->first()
 
 			if (Auth::attempt(array('email'=>$userdata['email'],'password'=>$userdata['password'],'level'=>'admin'))) {
-				return Redirect::intended('penulis');
+				return Redirect::intended('admin/penulis');
 			}elseif (Auth::attempt(array('email'=>$userdata['email'],'password'=>$userdata['password'],'level'=>'anggota'))) {
-				return Redirect::intended('kategori');
+				return Redirect::intended('admin/penulis');
 			}else{
 				// $data = Hash::make(Input::all());
 				var_dump($userdata);

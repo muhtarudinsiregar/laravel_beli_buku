@@ -9,7 +9,7 @@
 	</div>
 
 	<div class="col-lg-9">
-		{{ Form::open(array('url'=>'penulis','class'=>'form-horizontal','method'=>'POST')) }}
+		{{ Form::open(array('url'=>'admin/penulis','class'=>'form-horizontal','method'=>'POST')) }}
 
 		<div class="form-group">
 			<label for="inputEmail3" class="col-lg-2 control-label" name="Nama">Nama Penulis</label>

@@ -33,6 +33,24 @@ App::after(function($request, $response)
 |
 */
 
+Route::filter('admin',function(){
+	$admin_check = Auth::user()->level;
+
+	if ($admin_check=='anggota') {
+		return View::make('anggota.dashboard')->with('errorMessage','Opps Hanya Admin Yang boleh masuk');
+	}
+
+});
+
+Route::filter('anggota',function(){
+	$anggota_auth = Auth::user()->level;
+
+	if ($anggota_auth=='') {
+		# code...
+	}
+
+});
+
 Route::filter('auth', function()
 {
 	if (Auth::guest())

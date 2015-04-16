@@ -69,7 +69,7 @@ class BukuController extends \BaseController {
 
 
 
-		return Redirect::to('buku.create');
+		return Redirect::to('admin/buku/create');
 
 
 	}
@@ -128,8 +128,19 @@ class BukuController extends \BaseController {
 	public function update($id)
 	{
 		DB::table('buku')
-            ->where('id_bk', $id)
-            ->update(array('votes' => 1));
+		->where('id_bk',$id)
+		->update(array(
+			'judul' => Input::get('judul'),
+				'harga' => Input::get('harga'),
+				'id_pen' => Input::get('penulis'),
+				'id_ktgr' => Input::get('kategori'),
+				'tahun' => Input::get('tahun'),
+				'gambar' => "Pic",
+				'deskripsi' => Input::get('deskripsi')
+			));
+
+		Session::flash('message', 'Kategori Telah Diperbarui');
+		return Redirect::to('admin/buku/'.$id.'/edit');
 
 
 	}
@@ -143,7 +154,8 @@ class BukuController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		DB::table('buku')->where('id_bk', '=', 100)->delete();
+		DB::table('buku')->where('id_bk',$id)->delete();
+		return Redirect::to('admin/buku');
 	}
 
 

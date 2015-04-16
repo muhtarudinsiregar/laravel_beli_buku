@@ -39,7 +39,8 @@ class KategoriController extends \BaseController {
 		DB::table('kategori')->insert(array(
 			'nama'=>Input::get('kategori')
 			));
-		return Redirect::to('kategori/create');
+		Session::flash('message', 'Berhasil Menambah Kategori Baru');
+		return Redirect::to('admin/kategori/create');
 	}
 
 
@@ -64,8 +65,8 @@ class KategoriController extends \BaseController {
 	public function edit($id)
 	{
 		$kategori = DB::table('kategori')
-		->where('id_ktgr',$id)
-		->first();
+					->where('id_ktgr',$id)
+					->first();
 		$kategori = [
 		'kategori'=>$kategori
 		];
@@ -87,7 +88,7 @@ class KategoriController extends \BaseController {
 			'nama'=>Input::get('nama')
 			));
 		Session::flash('message', 'Kategori Telah Diperbarui');
-		return Redirect::to('kategori/'.$id.'/edit');
+		return Redirect::to('admin/kategori/'.$id.'/edit');
 	}
 
 
@@ -104,7 +105,7 @@ class KategoriController extends \BaseController {
 		->delete();
 
 		Session::flash('message', 'Data Berhasil Dihapus');
-		return Redirect::to('kategori');
+		return Redirect::to('admin/kategori');
 	}
 
 
