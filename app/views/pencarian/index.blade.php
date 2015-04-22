@@ -1,6 +1,10 @@
 @extends('layout/main')
     @section('content')
     <div class="row">
+        <div class="col-lg-3">
+            Lorem ipsum dolor sit amet.
+        </div>
+        <div class="col-lg-9">
             <?php foreach($data as $value){ ?>
             <div class="col-xs-18 col-sm-6 col-md-3">
                 <div class="thumbnail">
@@ -20,7 +24,8 @@
                 </div>
             </div>
             <?php } ?>
-        </div><!--features_items-->
+        </div>    
+    </div><!--features_items-->
     @stop
     <?php  ?>
     <!-- Single button -->

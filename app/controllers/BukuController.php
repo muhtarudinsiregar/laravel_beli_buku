@@ -50,9 +50,13 @@ class BukuController extends \BaseController {
 	 */
 	public function store()
 	{
-		// echo "string";
-		// var_dump(Input::all());	
-		// memasukkkan data ke tabel dgn autorincreament id
+		$gambar = Input::file('gambar');
+		
+		// $destionationPath = "/img";
+		$filename = $gambar->getClientOriginalName();
+		$gambar->move("public/img", $filename);
+
+		// var_dump($gambar);
 		DB::table('buku')->insert(
 			array(
 				'judul' => Input::get('judul'),
@@ -60,18 +64,12 @@ class BukuController extends \BaseController {
 				'id_pen' => Input::get('penulis'),
 				'id_ktgr' => Input::get('kategori'),
 				'tahun' => Input::get('tahun'),
-				'gambar' => "Pic",
+				'gambar' => $filename,
 				'deskripsi' => Input::get('deskripsi')
 
-			)
-		);
-
-
-
-
-		return Redirect::to('admin/buku/create');
-
-
+				)
+			);
+		return Redirect::to('admin/buku');
 	}
 
 
@@ -99,7 +97,7 @@ class BukuController extends \BaseController {
 		$buku = DB::table('penulis AS p')
 		->join('buku AS b','p.id_pen','=','b.id_pen')
 		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
-		->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori')
+		->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori','b.harga','b.deskripsi')
 		->where('b.id_bk',$id)
 		->first();
 		// $buku = DB::table('buku')->where('id_bk',$id)->get();
@@ -127,17 +125,38 @@ class BukuController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		DB::table('buku')
-		->where('id_bk',$id)
-		->update(array(
-			'judul' => Input::get('judul'),
+		$gambar = Input::file('gambar');
+		$delete = DB::table('buku')->where('id_bk',$id)->first();
+		// var_dump($delete);
+		if ($gambar) {
+			File::delete('public/img/'.$delete->gambar);
+			$filename = $gambar->getClientOriginalName();
+			// $fullname = $filename'.'$gambar->getClientOriginalExtension();
+			$gambar->move("public/img", $filename);
+			DB::table('buku')
+			->where('id_bk',$id)
+			->update(array(
+				'judul' => Input::get('judul'),
+				'harga' => Input::get('harga'),
+				'id_pen' => Input::get('penulis'),
+				'id_ktgr' => Input::get('kategori'),
+				'gambar' =>$filename,
+				'tahun' => Input::get('tahun'),
+				'deskripsi' => Input::get('deskripsi')
+				));
+		}else{
+			DB::table('buku')
+			->where('id_bk',$id)
+			->update(array(
+				'judul' => Input::get('judul'),
 				'harga' => Input::get('harga'),
 				'id_pen' => Input::get('penulis'),
 				'id_ktgr' => Input::get('kategori'),
 				'tahun' => Input::get('tahun'),
-				'gambar' => "Pic",
 				'deskripsi' => Input::get('deskripsi')
-			));
+				));
+		}
+		
 
 		Session::flash('message', 'Kategori Telah Diperbarui');
 		return Redirect::to('admin/buku/'.$id.'/edit');

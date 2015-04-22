@@ -11,7 +11,7 @@
 		Lorem ipsum dolor sit amet.	
 	</div>
 	<div class="col-lg-9">
-		{{ Form::model($buku,array('url'=>route('admin.buku.update',['buku'=>$buku->id_bk]),'class'=>'form-horizontal','method'=>'PUT')) }}
+		{{ Form::model($buku,array('url'=>route('admin.buku.update',['buku'=>$buku->id_bk]),'files'=>true,'class'=>'form-horizontal','method'=>'PUT')) }}
 		<div class="form-group">
 			<label for="inputEmail3" class="col-sm-2 control-label" name="Nama">Judul</label>
 			<div class="col-lg-9 col-lg-offset-1">
@@ -43,19 +43,16 @@
 		<div class="form-group">
 			<label for="inputEmail3" class="col-sm-2 control-label">Harga</label>
 			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="harga" class="form-control input-sm" id="inputEmail3" placeholder="Harga">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Penerbit*</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="penerbit" class="form-control input-sm" id="inputEmail3" placeholder="Penerbit">
+				{{ Form::text('harga', null, array('class' => 'form-control')) }}
+				{{-- <input type="text" name="harga" class="form-control input-sm" id="inputEmail3" placeholder="Harga"
+				 value="{{ $value->harga }}"> --}}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputEmail3" class="col-sm-2 control-label">Tahun</label>
 			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="tahun" class="form-control " id="inputEmail3" placeholder="Tahun">
+				{{ Form::text('tahun', null, array('class' => 'form-control')) }}
+				{{-- <input type="text" name="tahun" class="form-control " id="inputEmail3" placeholder="Tahun" value="{{ $value->tahun }}"> --}}
 			</div>
 		</div>
 		<div class="form-group">
@@ -67,7 +64,8 @@
 		<div class="form-group">
 			<label for="inputEmail3" class="col-sm-2 control-label">Deskripsi</label>
 			<div class="col-lg-9 col-lg-offset-1">
-				<textarea class="form-control" name="deskripsi" id="" cols="30" rows="10"></textarea>
+				{{ Form::textarea('deskripsi', null, array('class' => 'form-control')) }}
+				{{-- <textarea class="form-control" name="deskripsi" id="" cols="30" rows="10"></textarea> --}}
 			</div>
 		</div>
 		<div class="form-group">

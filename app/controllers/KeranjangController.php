@@ -31,9 +31,9 @@ class KeranjangController extends \BaseController {
 	 */
 	public function store()
 	{
-		DB::table('keranjang')->insert(array(
-				''
-			));
+		// DB::table('keranjang')->insert(array(
+		// 		''
+		// 	));
 	}
 
 
