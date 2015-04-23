@@ -50,7 +50,7 @@ ul.square{
   color: #EB6841;
 }
 .harga{
-  color: #42B548;
+  color: #FF8A22;
 }
 .custom-cari{
   margin-top: 8px;
@@ -69,7 +69,12 @@ body {
   padding-top: 70px;
   font-family: 'Open Sans', sans-serif;
 }
-
+.btn-primary.raised:active, .btn-primary.raised.active {
+    background: #33a6cc;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}
 .thumbnail {
     position: relative;
     padding: 0px;

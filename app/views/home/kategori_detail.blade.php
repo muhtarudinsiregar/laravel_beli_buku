@@ -1,7 +1,7 @@
 @extends('layout/main')
     @section('content')
     <div class="row">
-        @include('dashboard/anggota')
+        @include('dashboard.anggota')
         <div class="col-lg-9">
             <?php foreach($data as $value){ ?>
             <div class="col-xs-18 col-sm-6 col-md-3">

@@ -48,4 +48,15 @@ Route::post('store','LoginController@store');
 
 Route::get('home/show/{id}',array('as'=>'tampil','uses'=>'HomeController@show'));
 
-Route::resource('keranjang', 'keranjangController');
+Route::resource('keranjang/{$data}', 'keranjangController');
+
+Route::get('kategori/{id}', 'HomeController@kategori_detail');
+
+View::composer(array('home.kategori_detail','dashboard.anggota'), function($view) 
+{
+    $kategori = DB::table('kategori')->get();
+    // $data = [
+    // 	'kategori'=>$kategori
+    // ];
+    $view->with('kategori', $kategori);
+});

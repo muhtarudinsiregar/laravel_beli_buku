@@ -1,15 +1,13 @@
 @extends('layout/main')
     @section('content')
     <div class="row">
-        <div class="col-lg-3">
-            Lorem ipsum dolor sit amet.
-        </div>
+        @include('dashboard/anggota')
         <div class="col-lg-9">
             <?php foreach($data as $value){ ?>
             <div class="col-xs-18 col-sm-6 col-md-3">
                 <div class="thumbnail">
                     <div class="caption">
-                        <?php  echo HTML::image('img/'.$value->gambar, 'a picture'); ?>
+                        <?php  echo HTML::image('img/'.$value->gambar, 'a picture',array("width"=>"115","height"=>"212")); ?>
                         <div class="caption">
                             <h4 class="judul"><a href="{{ URL::to('home/show/'.$value->id_bk) }}"><?php    echo $value->judul ?></a></h4>
                             <p>Oleh <?php  echo $value->nama ?></p>

@@ -18,13 +18,13 @@ class HomeController extends BaseController {
 
 	public function index()
 	{
-		$data = DB::table('buku')->get();
-		$kategori = DB::table('kategori')->get();
+		$data = DB::table('buku AS b')
+		->join('penulis AS p','b.id_pen','=','p.id_pen')
+		->select('id_bk','judul','harga','gambar','p.nama')
+		->get();
 		$data = [
-		'data'=>$data,
-		'kategori'=>$kategori
+			'data'=>$data
 		];
-		// dd($kategori);
 		return View::make('home/main',$data)->withTitle('');
 
 	}
@@ -33,53 +33,60 @@ class HomeController extends BaseController {
 	{
 		$keyword = Input::get('search');
 
-		if (empty($keyword)) {
-			$data = DB::table('buku AS b')
-			->join('penulis AS p','b.id_pen','=','p.id_pen')
-			->select('b.id_bk','b.harga','b.judul','b.gambar','p.nama')
-			->take(10)
-			->get();
-		}else{
-
 			// fungsi cari buku berdasarkan nama penulis dan judul menggunakan query builder
 
-			$data = DB::table('buku AS b')
-					->join('penulis AS p','b.id_pen','=','p.id_pen')
-					->where('judul', 'LIKE', '%'.$keyword.'%')
-					->orWhere('p.nama','LIKE','%'.$keyword.'%')
-					->select('id_bk','judul','harga','gambar','p.nama')
-					->get();
+		$data = DB::table('buku AS b')
+		->join('penulis AS p','b.id_pen','=','p.id_pen')
+		->where('judul', 'LIKE', '%'.$keyword.'%')
+		->orWhere('p.nama','LIKE','%'.$keyword.'%')
+		->select('id_bk','judul','harga','gambar','p.nama')
+		->get();
 
 			// pencarian menggunakan raw query
 
 			// $data = DB::select("select id_bk,judul,harga,gambar,p.nama from buku as b 
 			// 	join penulis as p 
 			// 	on(b.id_pen=p.id_pen) where judul like '%$keyword%' or p.nama like '%$keyword%'");
-		}
-		// var_dump($data);
+		$kategori = DB::table('kategori')->get();
 		$data = [
-		'data'=>$data
+		'data'=>$data,
+		'kategori'=>$kategori
 		];
 
-		// var_dump($data);
+		
 		return View::make('pencarian/index',$data)->withTitle('Pencarian');
 	} //end func cari()
 
 	public function show($id)
 	{	
 		$data = DB::table('buku AS b')
-					->join('penulis AS p','b.id_pen','=','p.id_pen')
-					->where('id_bk', '=',$id)
-					->select('id_bk','judul','harga','gambar','p.nama')
-					->first();
+		->join('penulis AS p','b.id_pen','=','p.id_pen')
+		->where('id_bk', '=',$id)
+		->select('id_bk','judul','harga','gambar','p.nama','p.profil','deskripsi')
+		->first();
 		$data = [
-			'data'=>$data
+		'data'=>$data
 		];
-		return View::make('home/show',$data)->withTitle('Buku');
+		return View::make('pencarian/detail_buku',$data)->withTitle('Buku');
 	}
 	public function keranjang()
 	{
+		// echo "asas";
 		return View::make('keranjang/index')->withTitle('Keranjang');	
+	}
+
+	public function kategori_detail($id)
+	{
+		$data = DB::table('buku AS b')
+		->select('id_bk','judul','harga','gambar','k.nama')
+		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
+		->where('k.id_ktgr', '=',$id)
+		->get();
+		// dd($data);
+		$data = [
+		'data'=>$data
+		];
+		return View::make('home/kategori_detail',$data)->withTitle('Kategori');
 	}
 
 } //end class home

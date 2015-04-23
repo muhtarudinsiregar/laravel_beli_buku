@@ -37,7 +37,7 @@
             <?php echo Form::open(array('url'=>'cari','class'=>'navbar-form','method'=>'GET'))?>
             <div class="form-group" style="display:inline;">
                 <div class="input-group" style="display:table;">
-                    <input class="form-control" id="keyword" name="search" placeholder="Judul, Pengarang" autocomplete="off" autofocus="autofocus" type="text">
+                    <input class="form-control" id="keyword"  required name="search" placeholder="Judul, Pengarang" autocomplete="off" autofocus="autofocus" type="text">
                       {{--   <span class="input-group-btn" style="width:1%">
                             <select class="form-control" name="kategori">
                               <option value="0">Semua Kategori</option>
@@ -73,6 +73,7 @@
 
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.elevatezoom.js') }}"></script>
 <script>
     $('#profiles').keyup(function () {
         var max = 250;
@@ -84,6 +85,7 @@
         $('#charNum').text(char + ' characters left');
     }
 });
+    $("#img_01").elevateZoom();
 </script>
 </body>
 </html>
