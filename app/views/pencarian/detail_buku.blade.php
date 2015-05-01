@@ -3,11 +3,14 @@
 {{ $title }}
 @stop
 @section('content')
+@if(Session::has('notifikasi'))
 <div class="row">
-	<div class="col-lg-3">
-		{{-- <h2>Detail Data Buku</h2> --}}
-	</div>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>{{ Session::get('notifikasi')}}</strong>telah ditambahkan ke keranjang belanja anda
+    </div>
 </div>
+@endif
 {{-- tengah --}}
 <div class="row">	
 	<div class="col-lg-3">
@@ -38,17 +41,20 @@
 	</div>
 	<div class="col-lg-4">
 		{{-- <form class="form-inline"> --}}
-		{{ Form::open(['url'=>'keranjang','class'=>'form-horizontal']) }}
+		{{ Form::open(['url'=>'keranjang','class'=>'form-horizontal','method'=>"post"]) }}
+		{{ Form::hidden('id_bk', $data->id_bk) }}
+		{{-- {{ var_dump(Input::get('id_bk')); }} --}}
 		<div class="form-group">
 			<label for="inputPassword" class="col-sm-offset-2 col-lg-2 control-label">Jumlah </label>
 			<div class="col-sm-3">
-				<input type="number" class="form-control" min="0" max="50">
+				<input required type="number" class="form-control" min="0" max="50" name="jml_bk">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="" class="control-label col-lg-2"></label>
-			<button class="raised btn btn-primary btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> Masukkan Ke Keranjang</button>
+			<input type="submit" name="addItem" value="Tambah" class="btn btn-primary">
+			{{-- <button name="addItem" class="raised btn btn-primary btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> Masukkan Ke Keranjang</button> --}}
 		</div>
 		{{ Form::close()}}
 	</div>

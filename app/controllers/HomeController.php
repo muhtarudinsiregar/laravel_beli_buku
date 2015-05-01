@@ -15,16 +15,25 @@ class HomeController extends BaseController {
 	|
 	*/
 	// protected $template ='template/main'; 
+	public function __construct(){
+		$this->home = new HomeModel();
+		// return $this;
+	}
 
 	public function index()
 	{
-		$data = DB::table('buku AS b')
-		->join('penulis AS p','b.id_pen','=','p.id_pen')
-		->select('id_bk','judul','harga','gambar','p.nama')
-		->get();
+		// $data = DB::table('buku AS b')
+		// ->join('penulis AS p','b.id_pen','=','p.id_pen')
+		// ->select('id_bk','judul','harga','gambar','p.nama')
+		// ->get();
+
+		
+		$data = $this->home->Tampil();
+		// $data = Home::Tampil();
 		$data = [
 			'data'=>$data
 		];
+			// var_dump($data);
 		return View::make('home/main',$data)->withTitle('');
 
 	}
@@ -32,38 +41,17 @@ class HomeController extends BaseController {
 	public function cari()
 	{
 		$keyword = Input::get('search');
-
-			// fungsi cari buku berdasarkan nama penulis dan judul menggunakan query builder
-
-		$data = DB::table('buku AS b')
-		->join('penulis AS p','b.id_pen','=','p.id_pen')
-		->where('judul', 'LIKE', '%'.$keyword.'%')
-		->orWhere('p.nama','LIKE','%'.$keyword.'%')
-		->select('id_bk','judul','harga','gambar','p.nama')
-		->get();
-
-			// pencarian menggunakan raw query
-
-			// $data = DB::select("select id_bk,judul,harga,gambar,p.nama from buku as b 
-			// 	join penulis as p 
-			// 	on(b.id_pen=p.id_pen) where judul like '%$keyword%' or p.nama like '%$keyword%'");
-		$kategori = DB::table('kategori')->get();
+		// $data = ;
 		$data = [
-		'data'=>$data,
-		'kategori'=>$kategori
+		'data'=>$this->home->Cari($keyword)
 		];
-
 		
 		return View::make('pencarian/index',$data)->withTitle('Pencarian');
 	} //end func cari()
 
 	public function show($id)
 	{	
-		$data = DB::table('buku AS b')
-		->join('penulis AS p','b.id_pen','=','p.id_pen')
-		->where('id_bk', '=',$id)
-		->select('id_bk','judul','harga','gambar','p.nama','p.profil','deskripsi')
-		->first();
+		$data= $this->home->Show($id);
 		$data = [
 		'data'=>$data
 		];
@@ -86,7 +74,13 @@ class HomeController extends BaseController {
 		$data = [
 		'data'=>$data
 		];
-		return View::make('home/kategori_detail',$data)->withTitle('Kategori');
+
+		return View::make('home/kategori_detail',$data)	->withTitle('Kategori');
 	}
 
+	public function tes()
+	{
+		$name = DB::table('buku')->get();
+		var_dump($name);
+	}
 } //end class home

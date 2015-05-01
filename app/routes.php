@@ -16,6 +16,7 @@
 // 	return View::make('hello');
 // });
 
+Route::get('tes', "HomeController@tes");
 // route untuk menampilkan hasil pencarian
 Route::get('cari','HomeController@cari');
 //route halaman utama 
@@ -48,15 +49,12 @@ Route::post('store','LoginController@store');
 
 Route::get('home/show/{id}',array('as'=>'tampil','uses'=>'HomeController@show'));
 
-Route::resource('keranjang/{$data}', 'keranjangController');
+Route::resource('keranjang', 'KeranjangController');
 
 Route::get('kategori/{id}', 'HomeController@kategori_detail');
 
-View::composer(array('home.kategori_detail','dashboard.anggota'), function($view) 
+View::composer('dashboard/anggota', function($view) 
 {
     $kategori = DB::table('kategori')->get();
-    // $data = [
-    // 	'kategori'=>$kategori
-    // ];
     $view->with('kategori', $kategori);
 });

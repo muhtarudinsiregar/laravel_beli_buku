@@ -10,6 +10,5 @@
 			</div>
 			<?php }; ?>
 		</div><!--/category-productsr-->
-
 	</div>
 </div>

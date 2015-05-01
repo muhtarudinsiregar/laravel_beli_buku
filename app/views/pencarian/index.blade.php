@@ -9,8 +9,8 @@
                     <div class="caption">
                         <?php  echo HTML::image('img/'.$value->gambar, 'a picture',array("width"=>"115","height"=>"212")); ?>
                         <div class="caption">
-                            <h4 class="judul"><a href="{{ URL::to('home/show/'.$value->id_bk) }}"><?php    echo $value->judul ?></a></h4>
-                            <p>Oleh <?php  echo $value->nama ?></p>
+                            <h5 class="judul"><a href="{{ URL::to('home/show/'.$value->id_bk) }}"><div class="text-center"><?php    echo $value->judul ?></div></a></h5>
+                            <p>Oleh :<?php  echo $value->nama ?></p>
                             <p class="harga">Rp. <?php echo number_format($value->harga,0,',','.') ?></p>
                             <p>
                             {{-- <button class="btn btn-primary btn-md"> Tambah</button> --}}
