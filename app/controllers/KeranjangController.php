@@ -15,32 +15,44 @@ class KeranjangController extends \BaseController {
 	{	
 		// $session = Session::getId();
 		// var_dump($data);
-		$data = Session::get('items');
 		
-		foreach ($data as $value) {
+		if (Session::has('items'))
+		{
+			$data = Session::get('items');
+
+			foreach ($data as $value) {
 			// echo $value['item_id'];
 					// $id = array()
-			$id[]=$value['item_id'];
-			$jumlah[] = $value['item_quantity'];
-		}
+				$id[]=$value['item_id'];
+				$jumlah[] = $value['item_quantity'];
+			}
 
-		$id_buku = implode(',',$id);
-		// $jumlah = implode(',',$jumlah);
-		// var_dump($jumlah);
-		$data1 = array(
-			'data'=>$this->keranjang->get_book_name($id_buku),
-			'jumlah_buku'=>$data
-			);
-		dd($data1);
+
+			$id_buku = implode(',',$id);
+		// memasukkan id buku di session ke dalam database untuk mencari buku
+			$data_book =$this->keranjang->get_book_name($id_buku);
+
+		// memasukkan data jml buku dari session ke array yg ditampilkan
+			foreach ($data as $key=> $value) {
+				$data_book[$key]->jumlah_buku = $data[$key]['item_quantity'];
+				$data_book[$key]->total = $data[$key]['item_quantity'] * $data_book[$key]->harga;
+			// var_dump($data_book);
+			}
+
+		return View::make('keranjang/index')->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
+			
+		}else
+		{	
+			$notif = "Keranjang Masih Kosong";
+			return View::make('keranjang/index')->withTitle('Keranjang')->with('notif',$notif);
+		}
 
 		// ----------------------------using db for cart--------------------------------------------
 		// $data = array(
 		// 	'data'=>$this->keranjang->get_cart($session),
 		// 	'total'=>$this->keranjang->total_harga($session)
 		// 	);
-		return View::make('keranjang/index',$data1)->withTitle('Keranjang');
-		// dd(Session::get('items'));
-		// var_dump($data);		
+
 		
 	}
 
@@ -116,10 +128,10 @@ class KeranjangController extends \BaseController {
 
 
 
-		return Redirect::to('/');
+		// return Redirect::to('/');
 		// $data = $this->keranjang->get_book($buku_id);
 		// $this->keranjang->store($jumlah,$data);
-		// return Redirect::back()->with('notifikasi',$data->judul.' ');
+		return Redirect::back()->with('notifikasi','Berhasil ');
 
 	}
 

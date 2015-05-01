@@ -7,7 +7,7 @@
 <div class="row">
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>{{ Session::get('notifikasi')}}</strong>telah ditambahkan ke keranjang belanja anda
+        <strong>{{ Session::get('notifikasi')}}</strong>menambahkan buku ke keranjang belanja anda.
     </div>
 </div>
 @endif
