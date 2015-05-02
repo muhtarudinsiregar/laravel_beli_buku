@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 <body>
+   @section('navbar')
     <nav class="navbar navbar-custom navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -57,6 +58,7 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+@show
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -73,7 +75,7 @@
 
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.elevatezoom.js') }}"></script>
+@yield('assets')
 <script>
     $('#profiles').keyup(function () {
         var max = 250;
@@ -85,7 +87,6 @@
         $('#charNum').text(char + ' characters left');
     }
 });
-    $("#img_01").elevateZoom();
 </script>
 </body>
 </html>
