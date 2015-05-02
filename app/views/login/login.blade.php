@@ -45,7 +45,7 @@
 						<div class="col-md-12 control">
 							<div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
 								Belum Punya Akun! 
-								<a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+								<a href="{{ URL::to('daftar') }}">
 									Daftar Menjadi Anggota
 								</a>
 							</div>
