@@ -12,10 +12,9 @@
 					GROUP BY YEAR(tanggal_transaksi), MONTH(tanggal_transaksi)');
 			}
 
-			public function get_tanggal()
+			public function get_total()
 			{
-				// return DB::select('select DATE_FORMAT(tanggal_transaksi,"%M %Y") AS tanggal from keranjang group by YEAR(tanggal_transaksi),MONTH(tanggal_transaksi)');
-				// return DB:select('DATE_FORMAT(tanggal_transaksi,"%M %Y") AS tanggal from keranjang GROUP BY YEAR(tanggal_transaksi), MONTH(tanggal_transaksi)');
+				return $total = DB::table('keranjang')->sum('total_harga');
 			}
 		}
  ?>

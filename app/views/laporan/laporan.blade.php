@@ -11,8 +11,21 @@
 			<h4>Statistik Total Penjualan</h4>
 			<canvas id="chartPenjualan" width="400" height="400"></canvas>
 		</div>
+		<br>
 		<div class="row">
-			<a href="" class="btn btn-primary">Export ke PDF</a>
+			{{ Form::open(array('class'=>'form-inline','url'=>'export')) }}
+				<div class="form-group">
+					<select name="tahun" id="" class="form-control">
+						<option value="bulan">Hari</option>
+						<option value="bulan">Bulan</option>
+						<option value="bulan">Tahun</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for=""></label>
+					<input type="submit" class="btn btn-primary" value="Export ke PDF">
+				</div>
+			{{ Form::close() }}
 		</div>
 	</div>	
 </div>
@@ -38,7 +51,7 @@
 	};
 
 	var ctx = document.getElementById("chartPenjualan").getContext("2d");
-	var myLineChart = new Chart(ctx).Bar(data);
+	var myLineChart = new Chart(ctx).Line(data);
 
 </script>
 @stop
