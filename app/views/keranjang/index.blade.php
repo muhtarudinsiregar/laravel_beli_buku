@@ -14,9 +14,13 @@
                 </tr>
             </thead>
             <tbody>
-
+            <?php if (Session::has('notif')): ?>
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong><?php echo Session::get('notif'); ?></strong>   
+                    </div>
+            <?php endif ?>
                 @if(Session::has('items'))
-
                     @if(empty($data_book))
                         <div class="alert alert-info">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -25,6 +29,7 @@
                     @else
                     @foreach($data_book as $key =>$value)
                     <tr>
+                        <?php echo Form::open(array('url'=>'keranjang/'.$key,'method'=>'PUT')) ?>
                         <td data-th="Product">
                             <div class="row">
                                 <div class="col-sm-2 hidden-xs">
@@ -39,16 +44,18 @@
                         </td>
                         {{-- <td data-th="Price">Rp {{ $value->harga }}</td> --}}
                         <td data-th="Quantity">
-                            <input type="number" class="form-control text-center" value="{{ $value->jumlah_buku }}" min=0>
+                            <input type="number" class="form-control text-center" value="{{ $value->jumlah_buku }}" min=1 name="jml_bk">
                         </td>
                         <td data-th="Subtotal" class="text-center">
                             Rp {{ number_format($value->total,0,',','.') }}
                         </td>
+
                         <td class="actions" data-th="">
-                        
+                            {{ Form::button('<i class="fa fa-refresh"> Update</i>', array('class'=>'btn btn-primary','type'=>'submit'))  }}
+                            <?php echo Form::close() ?>
                             {{ Form::open(array('url'=>route('keranjang.destroy',$key),'method'=>'delete','class'=>'form-inline')) }}
-                            <a href="{{ URL::to('keranjang/'.$value->id_bk.'/edit') }}" class="btn btn-primary"><i class="fa fa-refresh"></i></a>
-                            {{ Form::button('<i class="fa fa-trash-o"></i>', array('class'=>'btn btn-danger','type'=>'submit'))  }}
+                            <br>
+                            {{ Form::button('<i class="fa fa-trash-o"> Hapus</i>', array('class'=>'btn btn-danger','type'=>'submit'))  }}
                             {{ Form::close() }}                                
                         </td>
                     </tr>

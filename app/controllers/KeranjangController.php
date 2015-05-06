@@ -171,9 +171,18 @@ class KeranjangController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($index)
 	{
-		
+		$jumlah_buku = Input::get('jml_bk');
+
+		$items = Session::get('items');
+		$items[$index]['item_quantity'] = (int)$jumlah_buku;
+		Session::set('items', $items);
+		Session::flash('notif','Jumlah Produk telah diubah menjadi '.$jumlah_buku);
+		return Redirect::back();
+
+
+
 	}
 
 
@@ -190,7 +199,8 @@ class KeranjangController extends \BaseController {
 		unset($items[$index]);
 		// Session::forget('items[$index]');
 		Session::set('items', $items);
-		return Redirect::back();
+		
+		return Redirect::to('keranjang')->with('notif',$notif);
 	}
 	
 
