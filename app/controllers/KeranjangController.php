@@ -15,37 +15,42 @@ class KeranjangController extends \BaseController {
 	{	
 		// $session = Session::getId();
 		// var_dump($data);
-		
+		// dd(Session::all());
 		if (Session::has('items'))
 		{
 			$data = Session::get('items');
 
-			foreach ($data as $value) {
+			if (empty($data)) {
+				$notif = "Keranjang Kosong";
+				return View::make('keranjang/index')->withTitle('Keranjang')->with('notif',$notif);
+			}else{
+				foreach ($data as $value) {
 			// echo $value['item_id'];
 					// $id = array()
-				$id[]=$value['item_id'];
-				$jumlah[] = $value['item_quantity'];
-			}
+					$id[]=$value['item_id'];
+					$jumlah[] = $value['item_quantity'];
+				}
 
 
-			$id_buku = implode(',',$id);
+				$id_buku = implode(',',$id);
 		// memasukkan id buku di session ke dalam database untuk mencari buku
-			$data_book =$this->keranjang->get_book_name($id_buku);
+				$data_book =$this->keranjang->get_book_name($id_buku);
 
 		// memasukkan data jml buku dari session ke array yg ditampilkan
-			foreach ($data as $key=> $value) {
-				$data_book[$key]->jumlah_buku = $data[$key]['item_quantity'];
-				$data_book[$key]->total = $data[$key]['item_quantity'] * $data_book[$key]->harga;
+				foreach ($data as $key=> $value) {
+					$data_book[$key]->jumlah_buku = $data[$key]['item_quantity'];
+					$data_book[$key]->total = $data[$key]['item_quantity'] * $data_book[$key]->harga;
 			// var_dump($data_book);
+				}
+				return View::make('keranjang/index')->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
 			}
 
-		return View::make('keranjang/index')->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
 			
-		}else
-		{	
-			$notif = "Keranjang Masih Kosong";
-			return View::make('keranjang/index')->withTitle('Keranjang')->with('notif',$notif);
+			
 		}
+		
+			
+		
 
 		// ----------------------------using db for cart--------------------------------------------
 		// $data = array(
@@ -109,7 +114,7 @@ class KeranjangController extends \BaseController {
 					// var_dump($items);
 				}
 				Session::put('items', $items);
-				// var_dump(Session::get('items'));
+				var_dump(Session::get('items'));
 			}else{
 				Session::put('items', [
 					0 =>[
@@ -168,7 +173,7 @@ class KeranjangController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		
 	}
 
 
@@ -178,9 +183,14 @@ class KeranjangController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		//
+	public function destroy($index)
+	{	
+		
+		$items = Session::get('items');
+		unset($items[$index]);
+		// Session::forget('items[$index]');
+		Session::set('items', $items);
+		return Redirect::back();
 	}
 	
 

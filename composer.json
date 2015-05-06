@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"barryvdh/laravel-dompdf": "0.4.4"
+		"laravel/framework": "4.2.*",
+		"barryvdh/laravel-dompdf": "0.4.4",
+		"dompdf/dompdf" : "0.6.*"
 	},
 	"autoload": {
 		"classmap": [

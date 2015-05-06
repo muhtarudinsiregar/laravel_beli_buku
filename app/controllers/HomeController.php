@@ -46,41 +46,33 @@ class HomeController extends BaseController {
 		'data'=>$this->home->Cari($keyword)
 		];
 		
-		return View::make('pencarian/index',$data)->withTitle('Pencarian');
+		return View::make('home/pencarian',$data)->withTitle('Pencarian');
 	} //end func cari()
 
 	public function show($id)
 	{	
-		$data= $this->home->Show($id);
 		$data = [
-		'data'=>$data
+		'data'=>$this->home->Show($id)
 		];
-		return View::make('pencarian/detail_buku',$data)->withTitle('Buku');
+		return View::make('home/detail_buku',$data)->withTitle('Buku');
 	}
 	public function keranjang()
 	{
-		// echo "asas";
 		return View::make('keranjang/index')->withTitle('Keranjang');	
 	}
 
 	public function kategori_detail($id)
 	{
-		$data = DB::table('buku AS b')
-		->select('id_bk','judul','harga','gambar','k.nama')
-		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
-		->where('k.id_ktgr', '=',$id)
-		->get();
-		// dd($data);
 		$data = [
-		'data'=>$data
+		'data'=>$this->home->kategori_detail($id)
 		];
 
 		return View::make('home/kategori_detail',$data)	->withTitle('Kategori');
 	}
 
-	public function tes()
-	{
-		$name = DB::table('buku')->get();
-		var_dump($name);
-	}
+	// public function tes()
+	// {
+	// 	$name = DB::table('buku')->get();
+	// 	var_dump($name);
+	// }
 } //end class home

@@ -31,6 +31,15 @@
 			->first();
 		}
 
+		public function kategori_detail($id)
+		{
+			return $data = DB::table('buku AS b')
+			->select('id_bk','judul','harga','gambar','k.nama')
+			->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
+			->where('k.id_ktgr', '=',$id)
+			->get();
+		}
+
 		
 
 	}

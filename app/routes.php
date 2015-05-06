@@ -54,6 +54,7 @@ Route::resource('keranjang', 'KeranjangController');
 Route::get('kategori/{id}', 'HomeController@kategori_detail');
 Route::get('laporan', 'LaporanController@index');
 Route::post('export', 'LaporanController@exportPdf');
+Route::post('dompdf', 'LaporanController@dompdf');
 Route::get('generate',function(){
 	return View::make('laporan/tes');
 });
