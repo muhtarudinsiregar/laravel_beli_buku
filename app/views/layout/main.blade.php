@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 <body>
-   @section('navbar')
+@section('navbar')
     <nav class="navbar navbar-custom navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -28,36 +28,36 @@
                     <li id="userPage" class="custom-cari">
                        <li><a href="#">Pencarian</a></li>
                    </li>
-               </ul>
-               <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ URL::to('daftar') }}">Daftar</a></li>
-                <li><a href="{{ URL::to('login') }}">Login</a></li>
-                <li><a href="{{ URL::to('keranjang') }}" class ='span-left'><i class="fa fa-shopping-cart"></i> Keranjang</a></li>
-            </ul>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ URL::to('daftar') }}">Daftar</a></li>
+                    <li><a href="{{ URL::to('login') }}">Login</a></li>
+                    <li><a href="{{ URL::to('keranjang') }}" class ='span-left'><i class="fa fa-shopping-cart"></i> Keranjang</a></li>
+                </ul>
             <!-- <form class="navbar-form"> -->
-            <?php echo Form::open(array('url'=>'cari','class'=>'navbar-form','method'=>'GET'))?>
-            <div class="form-group" style="display:inline;">
-                <div class="input-group" style="display:table;">
-                    <input class="form-control" id="keyword"  required name="search" placeholder="Judul, Pengarang" autocomplete="off" autofocus="autofocus" type="text">
-                      {{--   <span class="input-group-btn" style="width:1%">
-                            <select class="form-control" name="kategori">
-                              <option value="0">Semua Kategori</option>
-                              <option value="1">Lorem ipsum </option>
-                              <option value="2">Lorem ipsum </option>
-                            
-                          </select>
-                      </span> --}}
-                      <span class="input-group-btn" style="width:1%;">
-                        <button type="submit" class="btn btn-success" type="button">  <span class="glyphicon glyphicon-search"></span></button>
-                    </span>
+                <?php echo Form::open(array('url'=>'cari','class'=>'navbar-form','method'=>'GET'))?>
+                <div class="form-group" style="display:inline;">
+                    <div class="input-group" style="display:table;">
+                        <input class="form-control" id="keyword"  required name="search" placeholder="Judul, Pengarang" autocomplete="off" autofocus="autofocus" type="text">
+                          {{--   <span class="input-group-btn" style="width:1%">
+                                <select class="form-control" name="kategori">
+                                  <option value="0">Semua Kategori</option>
+                                  <option value="1">Lorem ipsum </option>
+                                  <option value="2">Lorem ipsum </option>
+                                
+                              </select>
+                          </span> --}}
+                          <span class="input-group-btn" style="width:1%;">
+                            <button type="submit" class="btn btn-success" type="button">  <span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <!-- </form> -->
-            <?php echo Form::close(); ?>
+                <!-- </form> -->
+                <?php echo Form::close(); ?>
 
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
 @show
 <div class="container">
     <div class="row">
@@ -68,7 +68,6 @@
             </ol>
         </div>
     </div>
-
     @yield('content')
 </div>
 

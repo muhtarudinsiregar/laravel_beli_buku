@@ -7,17 +7,17 @@ class BukuController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	protected $template = 'layout.main';
+	// protected $template = 'layout.main';
+	public function __construct(){
+		$this->home = new BukuModel();
+		// return $this;
+	}
 
 	public function index()
 	{
-		$data = DB::table('penulis AS p')
-		->join('buku AS b','p.id_pen','=','b.id_pen')
-		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
-		->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori')
-		->get();
+		
 		$data = array(
-			'data'=>$data
+			'data'=>$this->home->get_buku()
 			);
 		return View::make('buku.list', $data)->withTitle('List Buku');
 	}

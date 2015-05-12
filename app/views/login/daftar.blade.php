@@ -20,6 +20,13 @@
 				</div>
 				@endif
 
+				<?php if (Session::has('pesan')): ?>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<?php echo Session::get('pesan'); ?> Klik <a href="<?php echo URL::to('login'); ?>">disini</a> untuk masuk.
+					</div>
+				<?php endif ?>
+
 				{{-- <form id="loginform" class="form-horizontal" role="form"> --}}
 				{{ Form::open(array('url'=>'store','class'=>'form-horizontal','method'=>'POST','id'=>'loginform')) }}
 				<div class="form-group">
@@ -33,13 +40,13 @@
 				<div class="form-group">
 					<label for="firstname" class="col-md-3 control-label">Nama Lengkap</label>
 					<div class="col-md-9">
-						<input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
+						<input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="<?php echo Input::old('nama'); ?>">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="firstname" class="col-md-3 control-label">Nomor Hp</label>
 					<div class="col-md-9">
-						<input type="text" class="form-control" name="no_hp" placeholder="Nomor HP">
+						<input type="text" class="form-control" name="no_hp" placeholder="Nomor HP" value="<?php echo Input::old('no_hp'); ?>">
 					</div>
 				</div>
 				<div class="form-group">

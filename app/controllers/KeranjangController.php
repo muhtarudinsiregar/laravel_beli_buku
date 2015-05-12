@@ -21,7 +21,7 @@ class KeranjangController extends \BaseController {
 			$data = Session::get('items');
 
 			if (empty($data)) {
-				$notif = "Keranjang Kosong";
+				$notif = "Keranjang Kosong";	
 				return View::make('keranjang/index')->withTitle('Keranjang')->with('notif',$notif);
 			}else{
 				foreach ($data as $value) {
@@ -33,7 +33,7 @@ class KeranjangController extends \BaseController {
 
 
 				$id_buku = implode(',',$id);
-		// memasukkan id buku di session ke dalam database untuk mencari buku
+		// memasukkan id buku di session ke dalam database untuk mencari buku utu
 				$data_book =$this->keranjang->get_book_name($id_buku);
 
 		// memasukkan data jml buku dari session ke array yg ditampilkan
@@ -44,12 +44,14 @@ class KeranjangController extends \BaseController {
 				}
 				return View::make('keranjang/index')->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
 			}
-
-			
-			
+		}else{
+			return View::make('keranjang/index')->withTitle('Keranjang');
 		}
+
 		
-			
+
+		
+
 		
 
 		// ----------------------------using db for cart--------------------------------------------
@@ -114,7 +116,7 @@ class KeranjangController extends \BaseController {
 					// var_dump($items);
 				}
 				Session::put('items', $items);
-				var_dump(Session::get('items'));
+				// var_dump(Session::get('items'));
 			}else{
 				Session::put('items', [
 					0 =>[
@@ -122,10 +124,6 @@ class KeranjangController extends \BaseController {
 					'item_quantity'=>Input::get('jml_bk')
 					]]);
 			}
-
-			$data = Session::all();
-			
-			// $item = Item::list('item_name','id');
 		}
 
 		$data = Session::get('items');
@@ -199,8 +197,8 @@ class KeranjangController extends \BaseController {
 		unset($items[$index]);
 		// Session::forget('items[$index]');
 		Session::set('items', $items);
-		
-		return Redirect::to('keranjang')->with('notif',$notif);
+		Session::flash('notif','Buku Berhasil Di hapus');
+		return Redirect::back();
 	}
 	
 

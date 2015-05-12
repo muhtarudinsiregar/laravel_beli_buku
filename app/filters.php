@@ -37,15 +37,16 @@ Route::filter('admin',function(){
 	$admin_check = Auth::user()->level;
 
 	if ($admin_check=='anggota') {
-		return View::make('anggota.dashboard')->with('errorMessage','Opps Hanya Admin Yang boleh masuk');
-	}
+		Session::put('pesan','Oops, Anda tidak memiliki akses ke halaman admin');
+		return Redirect::to('anggota/dashboard');
 
+	}
 });
 
 Route::filter('anggota',function(){
 	$anggota_auth = Auth::user()->level;
 
-	if ($anggota_auth=='') {
+	if ($anggota_auth=='anggota') {
 		# code...
 	}
 

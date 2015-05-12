@@ -33,6 +33,7 @@ Route::group(array('before'=>'auth'),function(){
 		Route::resource('kategori', 'Kategoricontroller');
 	}); //end group admin dan filter
 
+Route::get('anggota/dashboard','AnggotaController@index');
 }); //end group auth
 //route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');

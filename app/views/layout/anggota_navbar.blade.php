@@ -15,7 +15,7 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-left">
-            <li><a href="{{ URL::to('daftar') }}">Buku</a></li>
+            <li><a href="{{ URL::to('daftar') }}">Sejarah Transaksi</a></li>
             <li><a href="{{ URL::to('kategori') }}">Kategori</a></li>
             <li><a href="{{ URL::to('login') }}">Penulis</a></li>
             <li><a href="{{ URL::to('login') }}">Laporan</a></li>

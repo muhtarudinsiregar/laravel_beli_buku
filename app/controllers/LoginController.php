@@ -9,6 +9,10 @@ class LoginController extends \BaseController {
 	 */
 	public function index()
 	{
+		if (Session::has('userdata')) {
+			return Redirect::to('anggota/dashboard');
+		}else
+		// var_dump(Session::all());
 		return View::make('login.login')->withTitle('Login');
 	}
 
@@ -50,6 +54,7 @@ class LoginController extends \BaseController {
 					'level'=>"anggota"
 					)
 				);
+			Session::flash('pesan','Berhasil Mendaftar Sebagai Anggota');
 			return Redirect::to('daftar');
 		}
 
@@ -73,11 +78,18 @@ class LoginController extends \BaseController {
 			];
 
 			// DB::table('users')->where('email',Input::get('email'))->first()
-
 			if (Auth::attempt(array('email'=>$userdata['email'],'password'=>$userdata['password'],'level'=>'admin'))) {
+				Session::put('userdata',array(
+					'id'=>Auth::user()->id,
+					'level'=>Auth::user()->level,
+					));
 				return Redirect::intended('admin/penulis');
 			}elseif (Auth::attempt(array('email'=>$userdata['email'],'password'=>$userdata['password'],'level'=>'anggota'))) {
-				return Redirect::intended('admin/penulis');
+				Session::put('userdata',array(
+					'id'=>Auth::user()->id,
+					'level'=>Auth::user()->level,
+					));
+				return Redirect::intended('anggota/dashboard');
 			}else{
 				// $data = Hash::make(Input::all());
 				var_dump($userdata);
@@ -90,7 +102,8 @@ class LoginController extends \BaseController {
 	public function logout()
 	{
 		Auth::logout();
-		return Redirect::to('login');
+		Session::forget('userdata');
+		return Redirect::intended('/');
 	}
 
 

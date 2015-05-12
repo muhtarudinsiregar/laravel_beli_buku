@@ -47,7 +47,7 @@
 		<div class="form-group">
 			<label for="inputPassword" class="col-sm-offset-2 col-lg-2 control-label">Jumlah </label>
 			<div class="col-sm-3">
-				<input required type="number" class="form-control" min="0" max="50" name="jml_bk">
+				<input required type="number" class="form-control" min="1" max="50" name="jml_bk" value="1">
 			</div>
 		</div>
 
