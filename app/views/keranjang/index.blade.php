@@ -1,8 +1,6 @@
 @extends('layout/main')
 @section('content')
-{{-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> --}}
 <div class="row">
-    <div class="col-lg-12">
         <table id="cart" class="table table-hover table-condensed">
             <thead>
                 <tr>
@@ -15,21 +13,16 @@
             </thead>
             <tbody>
             <?php if (Session::has('notif')): ?>
+                <?php var_dump(Session::all()) ?>
                     <div class="alert alert-info">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <strong><?php echo Session::get('notif'); ?></strong>   
                     </div>
             <?php endif ?>
-                @if(Session::has('items'))
-                    @if(empty($data_book))
-                        <div class="alert alert-info">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <strong></strong>{{ $notif }}
-                        </div>
-                    @else
-                    @foreach($data_book as $key =>$value)
+                <?php if (Session::get('items')): ?>
+                    <?php var_dump(Session::has('items')) ?>
+                    <?php foreach ($data_book as $key =>$value): ?>
                     <tr>
-                        
                         <td data-th="Product">
                             <div class="row">
                                 <div class="col-sm-2 hidden-xs">
@@ -55,32 +48,43 @@
                         <td data-th="Subtotal" class="text-center">
                             Rp {{ number_format($value->total,0,',','.') }}
                         </td>
-
                         <td class="actions" data-th="">
                             {{ Form::button(' Update ', array('class'=>'btn btn-primary','type'=>'submit'))  }}
                                                     
                         </td>
                          <?php echo Form::close() ?>  
                     </tr>
-
-                    @endforeach
-                    @endif
-                @else
-
-                @endif
+                    <?php endforeach ?>
+                <?php else: ?>
+                    <?php var_dump(Session::has('get')) ?>
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>Keranjang masih Kosong</strong>
+                    </div>
+                <?php endif ?>
             </tbody>
             <tfoot>
-                <tr class="visible-xs">
-                    <td class="text-center"><strong>Total 1.99</strong></td>
+                 <tr>
+                    <td colspan="" class="hidden-xs"></td>
+                    <td class="text-center">
+                        <h4>
+                            <strong>Total Harga</strong>
+                        </h4>
+                    </td>
+                    <td class="text-center">
+                        <h4>
+                            <strong>Rp <?php echo $total; ?></strong>
+
+                        </h4>
+                    </td>
+                    <td class="text-center"></td>
                 </tr>
                 <tr>
                     <td><a href="{{ URL::to('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Lanjut Berbelanja</a></td>
                     <td colspan="2" class="hidden-xs"></td>
-                    {{-- <td class="hidden-xs text-center"><strong>Total Harga $total->total</strong></td> --}}
                     <td><a href="{{ URL::to('login') }}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
             </tfoot>
         </table>
-    </div>
 </div>
 @stop

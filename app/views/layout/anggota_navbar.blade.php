@@ -18,7 +18,7 @@
             <li><a href="{{ URL::to('daftar') }}">Sejarah Transaksi</a></li>
             <li><a href="{{ URL::to('kategori') }}">Kategori</a></li>
             <li><a href="{{ URL::to('login') }}">Penulis</a></li>
-            <li><a href="{{ URL::to('login') }}">Laporan</a></li>
+            <li><a href="{{ URL::to('laporan') }}">Laporan</a></li>
          </ul>
          <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ URL::to('keranjang') }}" class ='span-left'><i class="fa fa-shopping-cart"></i> Keranjang</a></li>

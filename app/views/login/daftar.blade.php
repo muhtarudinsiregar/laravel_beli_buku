@@ -8,17 +8,17 @@
 				<div class="panel-title">Daftar </div>
 				{{-- <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div> --}}
 			</div>     
-
 			<div style="padding-top:30px" class="panel-body" >
-				@if($errors->has())
-				<div class="alert alert-danger">
+				<?php if ($errors->has()): ?>
+					<div class="alert alert-danger">
 					<ul class="square">
-						@foreach($errors->all() as $error)
-						<li>{{ $error }}</li>
-						@endforeach
+						<?php foreach ($errors->all() as $error): ?>
+							<li><?php echo $error; ?></li>
+						<?php endforeach ?>
 					</ul>
 				</div>
-				@endif
+				<?php endif ?>
+				
 
 				<?php if (Session::has('pesan')): ?>
 					<div class="alert alert-success">
@@ -28,7 +28,7 @@
 				<?php endif ?>
 
 				{{-- <form id="loginform" class="form-horizontal" role="form"> --}}
-				{{ Form::open(array('url'=>'store','class'=>'form-horizontal','method'=>'POST','id'=>'loginform')) }}
+				{{ Form::open(array('url'=>'daftar/validasi','class'=>'form-horizontal','method'=>'POST','id'=>'loginform')) }}
 				<div class="form-group">
 					<label for="email" class="col-md-3 control-label">Email</label>
 					<div class="col-md-9">
@@ -58,15 +58,14 @@
 				<div class="form-group">
 					<label for="password" class="col-md-3 control-label">Ulangi Password</label>
 					<div class="col-md-9">
-						<input type="password" class="form-control" name="re_password" placeholder=" Ulangi Password"> 
+						<input type="password" class="form-control" name="password_confirmation" placeholder=" Ulangi Password"> 
 					</div>
 				</div>
 				<div class="form-group">
 					<!-- Button -->                                        
 					<div class="col-md-offset-3 col-md-9">
 						<button id="btn-signup" type="submit" class="btn btn-info">Daftar</button>
-						<span style="margin-left:8px; margin-right:8px;">or</span>
-						<button id="btn-signup" type="submit" class="btn btn-success">Masuk
+					
 						</button>
 					</div>
 				</div>

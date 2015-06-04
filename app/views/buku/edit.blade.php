@@ -22,9 +22,14 @@
 			<label for="inputEmail3" class="col-sm-2 control-label">Penulis</label>
 			<div class="col-lg-9 col-lg-offset-1">
 				<select class="form-control" name="penulis">
-					@foreach($penulis as $value)
-						<option value="{{ $value->id_pen }}"> {{ $value->nama }} </option>
-					@endforeach
+					
+						{{-- <option value="{{ $value->id_pen }}"> {{ $value->nama }} </option> --}}
+					<?php 
+					foreach($penulis as $key => $value){
+						$selected = ($value->nama == $buku->penulis)? "selected='selected'":''; //sets html flag
+     				 	echo "<option value='$value->id_pen' $selected>$value->nama</option>\n";
+     				 }
+     				 ?>
 				</select>
 			</div>
 		</div>
@@ -36,6 +41,12 @@
 					@foreach($kategori as $value)
 					<option value="{{ $value->id_ktgr }}"> {{ $value->nama }} </option>
 					@endforeach
+					<?php 
+						foreach($kategori as $value){
+							$selected = ($value->nama == $buku->kategori)? "selected='selected'":''; //sets html flag
+     				 		echo "<option value='$value->id_ktgr' $selected>$value->nama</option>\n";
+     				 	}
+     				 ?>
 				</select>
 
 			</div>
@@ -73,8 +84,7 @@
 				<button type="submit"class="btn btn-primary">Tambah</button>
 			</div>
 		</div>
-
-		{{ Form::close() }}
+		<?php Form::close()  ?>
 	</div>
 </div>
 @stop

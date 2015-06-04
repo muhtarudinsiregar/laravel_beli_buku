@@ -40,21 +40,17 @@
 		</div>
 	</div>
 	<div class="col-lg-4">
-		{{-- <form class="form-inline"> --}}
 		{{ Form::open(['url'=>'keranjang','class'=>'form-horizontal','method'=>"post"]) }}
 		{{ Form::hidden('id_bk', $data->id_bk) }}
-		{{-- {{ var_dump(Input::get('id_bk')); }} --}}
 		<div class="form-group">
 			<label for="inputPassword" class="col-sm-offset-2 col-lg-2 control-label">Jumlah </label>
 			<div class="col-sm-3">
 				<input required type="number" class="form-control" min="1" max="50" name="jml_bk" value="1">
 			</div>
 		</div>
-
 		<div class="form-group">
 			<label for="" class="control-label col-lg-2"></label>
-			<input type="submit" name="addItem" value="Tambah" class="btn btn-primary">
-			{{-- <button name="addItem" class="raised btn btn-primary btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> Masukkan Ke Keranjang</button> --}}
+			<input type="submit" name="addItem" value="Masukkan Ke Keranjang" class="btn btn-primary">
 		</div>
 		{{ Form::close()}}
 	</div>

@@ -34,8 +34,9 @@
 		public function kategori_detail($id)
 		{
 			return $data = DB::table('buku AS b')
-			->select('id_bk','judul','harga','gambar','k.nama')
+			->select('id_bk','judul','harga','gambar','k.nama as kategori','p.nama as penulis')
 			->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
+			->join('penulis as p','b.id_pen','=','p.id_pen')
 			->where('k.id_ktgr', '=',$id)
 			->get();
 		}

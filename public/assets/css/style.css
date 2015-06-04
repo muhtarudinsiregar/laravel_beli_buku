@@ -1,3 +1,13 @@
+.thumbnail-custom{
+  width: 200px;
+    height: 330px;
+    /*overflow: auto;*/
+}
+.thumbnail-custom img{
+  width: 115px;
+  height:212px;
+}
+
 ul.square{
   list-style-type: square;
 }
@@ -66,7 +76,7 @@ html {
 
 body {
   min-height: 3000px;
-  padding-top: 70px;
+  /*padding-top: 70px;*/
   font-family: 'Open Sans', sans-serif;
 }
 .btn-primary.raised:active, .btn-primary.raised.active {
@@ -83,4 +93,11 @@ body {
 
 .thumbnail img {
     width: 100%;
+}
+
+.breadcrumb-custom{
+  margin-top: 25px;
+}
+.brand-custom {
+  margin-left: 89px !important;
 }

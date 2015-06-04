@@ -13,39 +13,53 @@ class KeranjangController extends \BaseController {
 	}
 	public function index()
 	{	
-		// $session = Session::getId();
-		// var_dump($data);
-		// dd(Session::all());
+		// dd(empty(Session::get('items')));
 		if (Session::has('items'))
 		{
 			$data = Session::get('items');
-
 			if (empty($data)) {
-				$notif = "Keranjang Kosong";	
-				return View::make('keranjang/index')->withTitle('Keranjang')->with('notif',$notif);
+				// Session::flash('notif', 'Keranjang Kosong');
+				$total = 0;	
+				return View::make('keranjang/index')->withTitle('Keranjang')->with('total',$total);
 			}else{
 				foreach ($data as $value) {
-			// echo $value['item_id'];
+				// echo $value['item_id'];
 					// $id = array()
 					$id[]=$value['item_id'];
 					$jumlah[] = $value['item_quantity'];
 				}
-
-
 				$id_buku = implode(',',$id);
-		// memasukkan id buku di session ke dalam database untuk mencari buku utu
+				// memasukkan id buku di session ke dalam database untuk mencari buku utu
 				$data_book =$this->keranjang->get_book_name($id_buku);
-
-		// memasukkan data jml buku dari session ke array yg ditampilkan
+				// memasukkan data jml buku dari session ke array yg ditampilkan
 				foreach ($data as $key=> $value) {
 					$data_book[$key]->jumlah_buku = $data[$key]['item_quantity'];
 					$data_book[$key]->total = $data[$key]['item_quantity'] * $data_book[$key]->harga;
-			// var_dump($data_book);
+				// var_dump($data_book);
 				}
-				return View::make('keranjang/index')->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
+				$total = 0;
+				$jml_buku = 0;
+				foreach ($data_book as $key => $value) {
+					$total = $total + $value->total;
+					$jml_buku = $jml_buku + $value->jumlah_buku;
+				}
+				// $data_buku = array(
+				// 		'total_harga'=>$total,
+				// 		'jumlah_buku'=>$jml_buku
+				// 	);
+				$data = array(
+					'total'=>$total,
+					'jumlah_buku'=>$jml_buku
+					);
+				Session::set('total_harga',$total);
+				Session::set('jumlah_buku',$jml_buku);
+
+				return View::make('keranjang/index',$data)->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
 			}
 		}else{
-			return View::make('keranjang/index')->withTitle('Keranjang');
+			// dd(Session::all());
+			$total = 0;
+			return View::make('keranjang/index')->withTitle('Keranjang')->with('total',$total);
 		}
 
 		
@@ -127,13 +141,6 @@ class KeranjangController extends \BaseController {
 		}
 
 		$data = Session::get('items');
-		// dd(Session::all());
-
-
-
-		// return Redirect::to('/');
-		// $data = $this->keranjang->get_book($buku_id);
-		// $this->keranjang->store($jumlah,$data);
 		return Redirect::back()->with('notifikasi','Berhasil ');
 
 	}
@@ -177,10 +184,7 @@ class KeranjangController extends \BaseController {
 		$items[$index]['item_quantity'] = (int)$jumlah_buku;
 		Session::set('items', $items);
 		Session::flash('notif','Jumlah Produk telah diubah menjadi '.$jumlah_buku);
-		return Redirect::back();
-
-
-
+		return Redirect::to('keranjang');
 	}
 
 
@@ -192,13 +196,12 @@ class KeranjangController extends \BaseController {
 	 */
 	public function destroy($index)
 	{	
-		
 		$items = Session::get('items');
 		unset($items[$index]);
 		// Session::forget('items[$index]');
 		Session::set('items', $items);
 		Session::flash('notif','Buku Berhasil Di hapus');
-		return Redirect::back();
+		return Redirect::to('keranjang');
 	}
 	
 

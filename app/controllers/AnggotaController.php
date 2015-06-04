@@ -4,7 +4,7 @@ class AnggotaController extends \BaseController {
 
 	public function __construct()
 	{
-		// $anggota = new AnggotaModel();
+		$anggota_model = new AnggotaModel();
 		
 	}
 	
@@ -12,5 +12,10 @@ class AnggotaController extends \BaseController {
 	{
 		return View::make('anggota.dashboard')->withTitle('Dashboard');
 	}
+	public function detail_pemesanan($id_pemesanan)
+	{
+		
+	}
+
 
 }

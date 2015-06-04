@@ -33,7 +33,7 @@ Route::group(array('before'=>'auth'),function(){
 		Route::resource('kategori', 'Kategoricontroller');
 	}); //end group admin dan filter
 
-Route::get('anggota/dashboard','AnggotaController@index');
+	Route::get('anggota/dashboard','AnggotaController@index');
 }); //end group auth
 //route untuk menampilkan isi keranjang 
 Route::get('keranjang','HomeController@keranjang');
@@ -45,8 +45,9 @@ Route::post('proses','LoginController@proses');
 Route::get('logout','LoginController@logout');
 // menampilkan halaman pendaftaran
 Route::get('daftar','LoginController@daftar');
+Route::post('daftar','LoginController@daftar');
 // otentifikasi pendaftaran
-Route::post('store','LoginController@store');
+Route::post('daftar/validasi','LoginController@validasi');
 
 Route::get('home/show/{id}',array('as'=>'tampil','uses'=>'HomeController@show'));
 
@@ -61,6 +62,6 @@ Route::get('generate',function(){
 });
 View::composer('dashboard/anggota', function($view) 
 {
-    $kategori = DB::table('kategori')->get();
-    $view->with('kategori', $kategori);
+	$kategori = DB::table('kategori')->get();
+	$view->with('kategori', $kategori);
 });

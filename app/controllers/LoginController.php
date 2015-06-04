@@ -7,6 +7,12 @@ class LoginController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
+	public function __construct(){
+		$this->LoginModel = new LoginModel();
+		// return $this;
+	}
+
 	public function index()
 	{
 		if (Session::has('userdata')) {
@@ -21,44 +27,47 @@ class LoginController extends \BaseController {
 		return View::make('login.daftar')->withTitle('Pendaftaran');
 	}
 
-	public function store()
+	public function validasi()
 	{
-		$rules = array(
-			'nama'=>'required',
-			'email'=>'required|email|unique:users',
-			'no_hp'=>'required|min:10|numeric',
-			'password'=>'required|min:8',
-			're_password'=>'min:8|same:password'
+		// ambil inputan form
+		$data_input = array(
+			'nama'=>Input::get('nama'),
+			'email'=>Input::get('email'),
+			'password'=>Hash::make(Input::get('password')),
+			'no_hp'=>Input::get('no_hp'),
+			'level'=>"anggota"
 			);
-		$messages = [
-			'nama.required'=>'Nama Lengkap harus diisi',
-			'email.required'=>'Email harus diisi',
-			'no_hp.required'=>'Nomor HP harus diisi',
-			'password.required'=>'Password harus diisi',
-			're_password.same'=>'Password Tidak Sama',
-			're_password.required'=>'Ulangi Password harus diisi',
-			'password.max'=>'Password Tidak Sama',
-			're_password.max'=>'Password Tidak Sama',
-		];
+		// setting aturan untuk validasi
+		$rules = array(
+			'email'=>'required|email|unique:users',
+			'nama'=>'required|min:3',
+			'no_hp'=>'required|numeric|digits_between:11,12',
+			'password'=>'required|min:5|confirmed',
+			'password_confirmation'=>'required|min:5'
+			);
+		// custom pesan error 
+		$messages = array(
+			'required' => 'Bagian :attribute Harus diisi ',
+			'email'=> 'Bagian :attribute Harus Valid',
+			'digits_between'=>'Bagian :attribute Minimal 11 dan Maks 12',
+			'unique'=>'Bagian :atribute sudah ada yang menggunakan',
+			'min'=>'Bagian :atribute minimal 3',
+			'numeric'=>'Bagian :atribute harus angka'
+			);
+		
 		$validator = Validator::make(Input::all(), $rules,$messages);
 		if ($validator->fails()) {
 
-			return Redirect::back()->withInput()->withErrors($validator);
+			return Redirect::to('daftar')->withInput()->withErrors($validator);
 		}else{
-			DB::table('users')->insert(
-				array(
-					'nama'=>Input::get('nama'),
-					'email'=>Input::get('email'),
-					'password'=>Hash::make(Input::get('password')),
-					'no_hp'=>Input::get('no_hp'),
-					'level'=>"anggota"
-					)
-				);
+			$this->LoginModel->simpan($data_input);
 			Session::flash('pesan','Berhasil Mendaftar Sebagai Anggota');
 			return Redirect::to('daftar');
 		}
-
 	}
+	// buat validator dari input, rules dan pesan
+		// lalu jika validator fail redirect
+		// jika sukses simpan data
 
 	public function proses()
 	{
