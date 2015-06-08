@@ -20,7 +20,6 @@
                     </div>
             <?php endif ?>
                 <?php if (Session::get('items')): ?>
-                    <?php var_dump(Session::has('items')) ?>
                     <?php foreach ($data_book as $key =>$value): ?>
                     <tr>
                         <td data-th="Product">
@@ -33,9 +32,9 @@
                                     <h4 class="nomargin"><a href="{{ URL::to('home/show/'.$value->id_bk) }}">{{ $value->judul }}</a></h4>
                                     <p class="harga">Rp. {{ number_format($value->harga,0,',','.') }}</p>
 
-                                    {{ Form::open(array('url'=>route('keranjang.destroy',$key),'method'=>'delete','class'=>'form-inline')) }}
+                                    <?php echo Form::open(array('url'=>route('keranjang.destroy',$key),'method'=>'delete','class'=>'form-inline')) ; ?>
                                     <br>
-                                    {{ Form::button('<i class="fa fa-trash-o"> Hapus</i>', array('class'=>'btn btn-danger','type'=>'submit'))  }}
+                                    <?php echo Form::button('<i class="fa fa-trash-o"> Hapus</i>', array('class'=>'btn btn-danger','type'=>'submit')); ?>
                                 {{ Form::close() }}     
                                 </div>
                             </div>
@@ -46,10 +45,10 @@
                             <input type="number" class="form-control text-center" value="{{ $value->jumlah_buku }}" min=1 name="jml_bk">
                         </td>
                         <td data-th="Subtotal" class="text-center">
-                            Rp {{ number_format($value->total,0,',','.') }}
+                            Rp <?php echo number_format($value->total,0,',','.'); ?>
                         </td>
                         <td class="actions" data-th="">
-                            {{ Form::button(' Update ', array('class'=>'btn btn-primary','type'=>'submit'))  }}
+                            <?php echo Form::button(' Update ', array('class'=>'btn btn-primary','type'=>'submit')); ?>
                                                     
                         </td>
                          <?php echo Form::close() ?>  
@@ -73,16 +72,26 @@
                     </td>
                     <td class="text-center">
                         <h4>
-                            <strong>Rp <?php echo $total; ?></strong>
+                            <strong>Rp <?php echo number_format($total,0,',','.'); ?></strong>
 
                         </h4>
                     </td>
                     <td class="text-center"></td>
                 </tr>
                 <tr>
-                    <td><a href="{{ URL::to('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Lanjut Berbelanja</a></td>
+                    <td>
+                        <a href="<?php echo URL::to('/'); ?>" class="btn btn-warning">
+                            <i class="fa fa-angle-left"></i> Lanjut Berbelanja
+                        </a>
+                    </td>
                     <td colspan="2" class="hidden-xs"></td>
-                    <td><a href="{{ URL::to('login') }}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                    <td>
+                        <?php if (Session::has('items')): ?>
+                        <a href="<?php echo URL::to('keranjang/pesan'); ?>" class="btn btn-info btn-block">
+                        Konfirmasi Pembayaran <i class="fa fa-angle-right"></i>
+                        </a>
+                        <?php endif ?>
+                    </td>
                 </tr>
             </tfoot>
         </table>

@@ -9,7 +9,12 @@
 			</div>     
 
 			<div style="padding-top:30px" class="panel-body" >
-
+				<?php if (Session::has('notif')): ?>
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong><?php echo Session::get('notif'); ?></strong>
+					</div>
+				<?php endif ?>
 				<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 				{{ $errors->first('email') }}
 				{{ $errors->first('password') }}

@@ -8,7 +8,7 @@ class KeranjangController extends \BaseController {
 	 * @return Response
 	 */
 	public function __construct(){
-		$this->keranjang = new KeranjangModel();
+		$this->keranjang_model = new KeranjangModel();
 		// return $this;
 	}
 	public function index()
@@ -30,7 +30,7 @@ class KeranjangController extends \BaseController {
 				}
 				$id_buku = implode(',',$id);
 				// memasukkan id buku di session ke dalam database untuk mencari buku utu
-				$data_book =$this->keranjang->get_book_name($id_buku);
+				$data_book =$this->keranjang_model->get_book_name($id_buku);
 				// memasukkan data jml buku dari session ke array yg ditampilkan
 				foreach ($data as $key=> $value) {
 					$data_book[$key]->jumlah_buku = $data[$key]['item_quantity'];
@@ -202,6 +202,55 @@ class KeranjangController extends \BaseController {
 		Session::set('items', $items);
 		Session::flash('notif','Buku Berhasil Di hapus');
 		return Redirect::to('keranjang');
+	}
+
+	public function pesan()
+	{
+		if (Auth::check()) {
+			return View::make('keranjang.keranjang_pesan')->withTitle('Pemesanan');
+		}else{
+			
+			Session::put('redirect','keranjang/pesan');
+			return Redirect::to('login');
+		}
+	}
+
+	public function konfirmasi()
+	{
+		$unique =md5(rand(1,9999));
+		$item = Session::get('items');
+		$total = Session::get('total_harga');
+		$jml_buku = Session::get('jumlah_buku');
+
+		foreach ($item as $value) {
+			$detail_item = array(
+				'id_pmsn'=>$unique,
+				'id_bk'=>$value['item_id'],
+				'jumlah'=>$value['item_quantity']
+				);
+			$this->keranjang_model->pemesanan_detail($detail_item);//insert detail pemesanan ke db satu persatu
+		}
+		// $email = Auth::user()->email;
+		$user = Auth::user()->id;//ambil id user
+
+		date_default_timezone_set('Asia/Jakarta');
+		$pemesanan = array(
+			'id_pmsn'=>$unique,
+			'id_usr'=>$user,
+			'total_harga'=>$total,
+			'jml_bk'=>$jml_buku,
+			'tanggal_pemesanan'=>date('Y-m-d  h:i:s A')
+			);
+		$this->keranjang_model->pemesanan($pemesanan);
+
+		$data = array(
+			'items'=>'items',
+			'total_harga'=>'total_harga',
+			'jumlah_buku'=>'jumlah_buku'
+			);
+		Session::forget($data);
+		Session::flash('notif','Terima Kasih sudah menggunakan layanan kami, pesanan anda akan kami proses.');
+		return Redirect::to('anggota/dashboard');
 	}
 	
 

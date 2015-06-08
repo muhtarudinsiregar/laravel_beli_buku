@@ -39,8 +39,20 @@
     </div>
     <ul class="nav navbar-nav navbar-left">
       <li><a href="<?php echo URL::to('keranjang'); ?>"><i class="fa fa-shopping-cart"></i> Keranjang</a></li>
-      <li><a href="<?php echo URL::to('daftar'); ?>">Daftar</a></li>
+     @if (Auth::check())
+        <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{ Auth::user()->nama }}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="<?php echo URL::to('anggota/dashboard'); ?>">Sejarah Transaksi</a></li>
+                      <li><a href="#">Profil</a></li>
+                      <li class="divider"></li>
+                      <li><a href="{{ URL::to('logout') }}">Keluar</a></li>
+                    </ul>
+                </li>
+    @else
+         <li><a href="<?php echo URL::to('daftar'); ?>">Daftar</a></li>
       <li><a href="<?php echo URL::to('login'); ?>">Login</a></li>
+     @endif
       
     </ul>
   </div><!-- /.navbar-collapse -->

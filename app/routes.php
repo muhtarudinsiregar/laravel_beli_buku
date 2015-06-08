@@ -32,7 +32,7 @@ Route::group(array('before'=>'auth'),function(){
 // route untuk kategori 
 		Route::resource('kategori', 'Kategoricontroller');
 	}); //end group admin dan filter
-
+	Route::get('anggota/detail_pemesanan/{id}', 'AnggotaController@detail_pemesanan');
 	Route::get('anggota/dashboard','AnggotaController@index');
 }); //end group auth
 //route untuk menampilkan isi keranjang 
@@ -51,6 +51,9 @@ Route::post('daftar/validasi','LoginController@validasi');
 
 Route::get('home/show/{id}',array('as'=>'tampil','uses'=>'HomeController@show'));
 
+
+Route::get('keranjang/pesan', 'KeranjangController@pesan');
+Route::get('keranjang/konfirmasi', 'KeranjangController@konfirmasi');
 Route::resource('keranjang', 'KeranjangController');
 
 Route::get('kategori/{id}', 'HomeController@kategori_detail');
@@ -60,8 +63,11 @@ Route::post('dompdf', 'LaporanController@dompdf');
 Route::get('generate',function(){
 	return View::make('laporan/tes');
 });
+
+
 View::composer('dashboard/anggota', function($view) 
 {
 	$kategori = DB::table('kategori')->get();
 	$view->with('kategori', $kategori);
 });
+

@@ -15,11 +15,20 @@ class LoginController extends \BaseController {
 
 	public function index()
 	{
-		if (Session::has('userdata')) {
-			return Redirect::to('anggota/dashboard');
-		}else
-		// var_dump(Session::all());
-		return View::make('login.login')->withTitle('Login');
+		if (Auth::check())
+		{
+			if (Auth::user()->level =='admin') {
+				# code...
+				return Redirect::to('buku');
+			}else
+			{
+				return Redirect::to('anggota.dashboard');
+			}
+		}
+		else
+		{
+			return View::make('login.login')->withTitle('Login');
+		}
 	}
 
 	public function daftar()
@@ -88,22 +97,14 @@ class LoginController extends \BaseController {
 
 			// DB::table('users')->where('email',Input::get('email'))->first()
 			if (Auth::attempt(array('email'=>$userdata['email'],'password'=>$userdata['password'],'level'=>'admin'))) {
-				Session::put('userdata',array(
-					'id'=>Auth::user()->id,
-					'level'=>Auth::user()->level,
-					));
+			
 				return Redirect::intended('admin/penulis');
 			}elseif (Auth::attempt(array('email'=>$userdata['email'],'password'=>$userdata['password'],'level'=>'anggota'))) {
-				Session::put('userdata',array(
-					'id'=>Auth::user()->id,
-					'level'=>Auth::user()->level,
-					));
-				return Redirect::intended('anggota/dashboard');
+				$redirect = Session::get('redirect');
+				return Redirect::to($redirect);
 			}else{
-				// $data = Hash::make(Input::all());
-				var_dump($userdata);
-				// echo "string";
-				// return Redirect::to('login');
+				Session::flash('notif','Email atau Password Salah!');
+				return Redirect::to('login');
 			} //end if kedua
 		} //ends if pertama
 	} // ends fungsi proses
@@ -111,7 +112,6 @@ class LoginController extends \BaseController {
 	public function logout()
 	{
 		Auth::logout();
-		Session::forget('userdata');
 		return Redirect::intended('/');
 	}
 

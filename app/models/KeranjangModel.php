@@ -38,6 +38,15 @@ Class KeranjangModel
 		// return $total = DB::table('buku')->select('id_bk','gambar','harga')->where('id_bk','in',$id)->get();
 
 	}
+
+	public function pemesanan_detail($detail_item)
+	{
+		DB::table('pemesanan_detail')->insert($detail_item);
+	}
+	public function pemesanan($pemesanan)
+	{
+		DB::table('pemesanan')->insert($pemesanan);
+	}
 }
 
 
