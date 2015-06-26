@@ -1,82 +1,91 @@
 @extends('layout/main')
-@section('title')
-{{ $title }}
+@section('sidebar')
+@include('layout.sidebar')
 @stop
 @section('content')
-{{-- <h2 class="title text-center">Tambah Buku </h2> --}}
-
-
-<div class="row">
-	<div class="col-lg-3">
-		Lorem ipsum dolor sit amet.	
-	</div>
 	<div class="col-lg-9">
-		{{ Form::open(array('url'=>'admin/buku','class'=>'form-horizontal','method'=>'POST','files'=>true)) }}
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label" name="Nama">Judul</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="judul" class="form-control input-sm" placeholder="Judul">
-			</div>
+	<?php if (Session::has('notif')): ?>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong><?php echo Session::get('notif'); ?></strong>
 		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Penulis</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<select class="form-control" name="penulis">
-					@foreach($penulis as $value)
-						<option value="{{ $value->id_pen }}"> {{ $value->nama }} </option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Kategori</label>
-			<div class="col-lg-9 col-lg-offset-1">
-
-				<select class="form-control" name="kategori">
-					@foreach($kategori as $value)
-					<option value="{{ $value->id_ktgr }}"> {{ $value->nama }} </option>
-					@endforeach
-				</select>
-
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Harga</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="harga" class="form-control input-sm" id="inputEmail3" placeholder="Harga">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Penerbit*</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="penerbit" class="form-control input-sm" id="inputEmail3" placeholder="Penerbit">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Tahun</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<input type="text" name="tahun" class="form-control " id="inputEmail3" placeholder="Tahun">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Gambar</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<input type="file" name="gambar" class="form-control">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">Deskripsi</label>
-			<div class="col-lg-9 col-lg-offset-1">
-				<textarea class="form-control" name="deskripsi" id="" cols="30" rows="10"></textarea>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-lg-9 col-lg-offset-1">
-				<button type="submit"class="btn btn-primary">Tambah</button>
-			</div>
-		</div>
-
-		{{ Form::close() }}
-	</div>
-</div>
+	<?php endif ?>
+	<div class="panel panel-default">
+		<div class="panel-heading">Tambah Buku</div>
+			<div class="panel-body">
+				<div class="col-md-12">
+					<?php echo Form::open(array('url'=>'admin/buku','class'=>'form-horizontal','method'=>'POST','files'=>true)); ?>
+					<div class="row">
+						<div class="col-lg-5">	
+							<div class="form-group">
+								<label for="nama">Judul Buku</label>
+								<input type="text" class="form-control" name="judul" placeholder="Judul Buku">
+							</div>
+						</div>
+						<div class="col-lg-5 col-md-offset-1">	
+							<div class="form-group">
+								<label for="nama">Harga Buku</label>
+								<input type="text" class="form-control" name="harga" placeholder="Harga Buku">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="form-group">
+								<label for="nama">Kategori Buku</label>
+								<select name="kategori" class="form-control">
+									<?php foreach ($kategori as $value): ?>
+										<option value="<?php echo $value->id_ktgr; ?>"> <?php echo $value->nama; ?> </option>
+									<?php endforeach ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-5 col-lg-offset-1">
+								<div class="form-group">
+									<label for="nama">Tahun</label>
+									<input type="text" class="form-control" name="tahun" placeholder="Tahun">
+								</div>
+						</div>
+					</div>
+					<div class="row">
+							<div class="col-lg-5">
+								<div class="form-group">
+									<label for="nama">Penulis</label>
+									<select name="penulis" class="form-control">
+										<?php foreach ($penulis as $value): ?>
+											<option value="<?php echo $value->id_pen ?>"><?php echo $value->nama; ?></option>
+										<?php endforeach ?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3 col-lg-offset-1">
+								<div class="form-group">
+									<label for="nama">Gambar</label>
+									<input type="file" class="form-control" name="gambar" placeholder="Gambar Buku">
+								</div>
+							</div>
+					</div>
+					<div class="row">
+							<div class="col-lg-5">
+								<div class="form-group">
+									<label for="nama">Deskripsi</label>
+									<textarea class="textarea form-control"  cols="" rows="8" name="deskripsi"></textarea>		
+								</div>
+								</div>
+							<div class="col-lg-3 col-lg-offset-1">
+								<div class="form-group">
+									<div class="row">
+										<label for=""></label>
+										<button class="btn btn-primary" type="submit">Tambah</button>
+										<button class="btn btn-danger col-lg-offset-1 " type="reset">Reset</button>
+									</div>
+								</div>
+							</div>
+					</div>
+					<?php echo Form::close() ?>
+				<!-- </form> -->
+			</div> <!--/.col -md-12 -->
+		</div> <!--/.panel-body -->
+	</div> <!--/.panel-default -->
+</div> <!--/.col-lg-12-->
 @stop

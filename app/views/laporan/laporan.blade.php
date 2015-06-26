@@ -1,35 +1,30 @@
 @extends('layout.main')
-@section('navbar')
-	@include('layout.admin_navbar')
+@section('sidebar')
+@include('layout.sidebar')
 @stop
 @section('content')
-<div class="row">
-	{{-- @include('dashboard/admin') --}}
-	<div class="col-lg-9 col-lg-offset-2">
-		<div class="row">
-			<hr>
-			<h4>Statistik Total Penjualan</h4>
-			<canvas id="chartPenjualan" width="400" height="400"></canvas>
+<div class="col-lg-9">
+	<div class="row">
+		<div class="panel panel-primary">
+			  <div class="panel-heading">
+					<h3 class="panel-title">Statistik Total Penjualan</h3>
+			  </div>
+			  <div class="panel-body">
+					<canvas id="chartPenjualan" width="400" height="300"></canvas>
+			  </div>
 		</div>
-		<br>
-		<div class="row">
-			{{ Form::open(array('class'=>'form-inline','url'=>'export')) }}
-				<div class="form-group">
-					<select name="tahun" id="" class="form-control">
-						<option value="bulan">Hari</option>
-						<option value="bulan">Bulan</option>
-						<option value="bulan">Tahun</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for=""></label>
-					<input type="submit" class="btn btn-primary" value="Export ke PDF">
-				</div>
-			{{ Form::close() }}
-		</div>
-	</div>	
+	</div>
+	<div class="row">
+		<?php echo Form::open(array('class'=>'form-inline','url'=>'export')); ?>
+			<div class="form-group">
+				<label for=""></label>
+				<input type="submit" class="btn btn-primary" value="Export ke PDF">
+			</div>
+			<?php echo Form::close() ; ?>
+	</div>
 </div>
 @stop
+
 @section('assets')
 <script src="{{ asset('assets/js/Chart.min.js')}}"></script>
 <script>

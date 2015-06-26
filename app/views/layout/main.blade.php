@@ -63,15 +63,19 @@
 </ol>
 @show
 <div class="container">
-  <div class="row">
+ 	<div class="row">
       <ol class="breadcrumb breadcrumb-custom item">
         <li><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
         <li class="active">{{ $title }}</li>
       </ol>
-  </div>
-
-    @yield('sidebar')
+  	</div>
+	<div class="row">
+		@yield('sidebar')
+    
     @yield('content')
+    </div>
+	
+    
  
 </div>
 

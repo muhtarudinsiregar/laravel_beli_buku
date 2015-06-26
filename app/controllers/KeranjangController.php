@@ -13,18 +13,14 @@ class KeranjangController extends \BaseController {
 	}
 	public function index()
 	{	
-		// dd(empty(Session::get('items')));
 		if (Session::has('items'))
 		{
 			$data = Session::get('items');
 			if (empty($data)) {
-				// Session::flash('notif', 'Keranjang Kosong');
 				$total = 0;	
 				return View::make('keranjang/index')->withTitle('Keranjang')->with('total',$total);
 			}else{
 				foreach ($data as $value) {
-				// echo $value['item_id'];
-					// $id = array()
 					$id[]=$value['item_id'];
 					$jumlah[] = $value['item_quantity'];
 				}
@@ -43,38 +39,20 @@ class KeranjangController extends \BaseController {
 					$total = $total + $value->total;
 					$jml_buku = $jml_buku + $value->jumlah_buku;
 				}
-				// $data_buku = array(
-				// 		'total_harga'=>$total,
-				// 		'jumlah_buku'=>$jml_buku
-				// 	);
 				$data = array(
 					'total'=>$total,
 					'jumlah_buku'=>$jml_buku
 					);
-				Session::set('total_harga',$total);
-				Session::set('jumlah_buku',$jml_buku);
+				Session::put('total_harga',$total);
+				Session::put('jumlah_buku',$jml_buku);
 
-				return View::make('keranjang/index',$data)->withTitle('Keranjang')->with('data_book',$data_book)->withNotif('');
+				return View::make('keranjang/index',$data)->withTitle('Keranjang')->with('data_book',$data_book);
 			}
 		}else{
 			// dd(Session::all());
 			$total = 0;
 			return View::make('keranjang/index')->withTitle('Keranjang')->with('total',$total);
 		}
-
-		
-
-		
-
-		
-
-		// ----------------------------using db for cart--------------------------------------------
-		// $data = array(
-		// 	'data'=>$this->keranjang->get_cart($session),
-		// 	'total'=>$this->keranjang->total_harga($session)
-		// 	);
-
-		
 	}
 
 
@@ -96,42 +74,35 @@ class KeranjangController extends \BaseController {
 	 */
 	public function store()
 	{	
-		// $jumlah_buku = Input::get('jml_bk');
-		// $id_buku = Input::get('id_bk');
-		// var_dump(Input::has('addItem'));
 		if (Input::get('jml_bk')) {
-			if (Session::has('items')) {
+			if (Session::has('items'))
+			{
 				Session::push('items', [
 					'item_id'=>Input::get('id_bk'),
 					'item_quantity'=>Input::get('jml_bk')
 					]);
 				$array = Session::get('items');
 				$total = array(); //move outside foreach loop because we don't want to reset it
-				// var_dump($array);
 				foreach ($array as $key => $value) {
 					$id = $value['item_id'];
 					$quantity = $value["item_quantity"];
-					
 					if (!isset($total[$id])) {
 						$total[$id] = 0;
 					}
 					$data = $total[$id]	+=$quantity;
-					// echo $total[$id];
 				}
 				//now convert our associative array from  array(actual_item_id => actual_item_quantity,....)
       			//into array(array('item_id' => actual_item_id, 'item_quantity' => actual_item_quantity), ....)
 				$items = array();
-
 				foreach ($total as $item_id => $item_quantity) {
 					$items[]= array(
 						'item_id'=>$item_id,
 						'item_quantity'=>$item_quantity,
 						);
-					// var_dump($items);
 				}
 				Session::put('items', $items);
-				// var_dump(Session::get('items'));
-			}else{
+			}else
+			{
 				Session::put('items', [
 					0 =>[
 					'item_id'=>Input::get('id_bk'),
@@ -139,10 +110,8 @@ class KeranjangController extends \BaseController {
 					]]);
 			}
 		}
-
-		$data = Session::get('items');
+		// $data = Session::get('items');
 		return Redirect::back()->with('notifikasi','Berhasil ');
-
 	}
 
 

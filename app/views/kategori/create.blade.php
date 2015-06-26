@@ -1,21 +1,15 @@
 @extends('layout/main')
+@section('sidebar')
+@include('layout.sidebar')
+@stop
 @section('content')
-<div class="row">
-	<h2>Tambah Kategori</h2>
-</div>
+@if (Session::has('message'))
 <div class="row">
 	<div class="col-lg-offset-3 div col-lg-9">
-		@if (Session::has('message'))
 		<div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
-
-		@endif
 	</div>
 </div>	
-<div class="row">
-	<div class="col-lg-3">
-		Lorem ipsum dolor sit amet.
-	</div>
-
+@endif
 	<div class="col-lg-9">
 		{{ Form::open(array('url'=>'admin/kategori','class'=>'form-horizontal','method'=>'POST')) }}
 
@@ -41,8 +35,4 @@
 
 		{{ Form::close() }}
 	</div>
-</div>
-
-
-
 @stop

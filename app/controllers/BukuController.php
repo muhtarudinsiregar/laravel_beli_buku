@@ -9,15 +9,14 @@ class BukuController extends \BaseController {
 	 */
 	// protected $template = 'layout.main';
 	public function __construct(){
-		$this->home = new BukuModel();
+		$this->BukuModel = new BukuModel();
 		// return $this;
 	}
 
 	public function index()
 	{
-		
 		$data = array(
-			'data'=>$this->home->get_buku()
+			'data'=>$this->BukuModel->get_buku()
 			);
 		return View::make('buku.list', $data)->withTitle('List Buku');
 	}
@@ -30,14 +29,10 @@ class BukuController extends \BaseController {
 	 */
 	public function create()
 	{
-		// $this->layout->content = 
-		$kategori = DB::table('kategori')->get();
-		$penulis = DB::table('penulis')->get();
 		$data = array(
-			'kategori'=>$kategori,
-			'penulis'=>$penulis
+			'kategori'=>$this->BukuModel->kategori(),
+			'penulis'=>$this->BukuModel->penulis()
 			);
-
 		return View::make('buku.create',$data)->withTitle('Tambah Buku');
 		
 	}
@@ -51,25 +46,20 @@ class BukuController extends \BaseController {
 	public function store()
 	{
 		$gambar = Input::file('gambar');
-		
-		// $destionationPath = "/img";
 		$filename = $gambar->getClientOriginalName();
 		$gambar->move("public/img", $filename);
-
-		// var_dump($gambar);
-		DB::table('buku')->insert(
-			array(
-				'judul' => Input::get('judul'),
-				'harga' => Input::get('harga'),
-				'id_pen' => Input::get('penulis'),
-				'id_ktgr' => Input::get('kategori'),
-				'tahun' => Input::get('tahun'),
-				'gambar' => $filename,
-				'deskripsi' => Input::get('deskripsi')
-
-				)
+		$data = array(
+			'judul' => Input::get('judul'),
+			'harga' => Input::get('harga'),
+			'id_pen' => Input::get('penulis'),
+			'id_ktgr' => Input::get('kategori'),
+			'tahun' => Input::get('tahun'),
+			'gambar' => $filename,
+			'deskripsi' => Input::get('deskripsi')
 			);
-		return Redirect::to('admin/buku');
+		$this->BukuModel->simpan_buku($data);
+		Session::flash('notif', 'Berhasil Menambah Buku Baru');
+		return Redirect::to('admin/buku/create');
 	}
 
 
@@ -94,26 +84,22 @@ class BukuController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$buku = DB::table('penulis AS p')
-		->join('buku AS b','p.id_pen','=','b.id_pen')
-		->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
-		->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori','b.harga','b.deskripsi')
-		->where('b.id_bk',$id)
-		->first();
-		// $buku = DB::table('buku')->where('id_bk',$id)->get();
-		// var_dump($buku);
-		$kategori = DB::table('kategori')->get();
-		$penulis = DB::table('penulis')->get();
-		
+
 		$data = array(
-			'buku'=>$buku,
-			'kategori'=>$kategori,
-			'penulis'=>$penulis,
+			'buku'=>$this->BukuModel->edit($id),
+			'kategori'=>$this->BukuModel->kategori(),
+			'penulis'=>$this->BukuModel->penulis()
 			);
-
-
-		// var_dump($data);
 		return View::make('buku.edit',$data)->withTitle('Edit Buku');
+			// $buku = DB::table('penulis AS p')
+		// ->join('buku AS b','p.id_pen','=','b.id_pen')
+		// ->join('kategori AS k','b.id_ktgr','=','k.id_ktgr')
+		// ->select('b.id_bk','b.harga','b.judul','b.tahun','p.nama as penulis','k.nama as kategori','b.harga','b.deskripsi')
+		// ->where('b.id_bk',$id)
+		// ->first();
+		// $buku = DB::table('buku')->where('id_bk',$id)->first();
+		// var_dump($buku);
+		
 	}
 
 
@@ -126,16 +112,13 @@ class BukuController extends \BaseController {
 	public function update($id)
 	{
 		$gambar = Input::file('gambar');
-		$delete = DB::table('buku')->where('id_bk',$id)->first();
-		// var_dump($delete);
+		$delete = $this->BukuModel->edit($id);
+
 		if ($gambar) {
 			File::delete('public/img/'.$delete->gambar);
 			$filename = $gambar->getClientOriginalName();
-			// $fullname = $filename'.'$gambar->getClientOriginalExtension();
 			$gambar->move("public/img", $filename);
-			DB::table('buku')
-			->where('id_bk',$id)
-			->update(array(
+			$data = array(
 				'judul' => Input::get('judul'),
 				'harga' => Input::get('harga'),
 				'id_pen' => Input::get('penulis'),
@@ -143,25 +126,22 @@ class BukuController extends \BaseController {
 				'gambar' =>$filename,
 				'tahun' => Input::get('tahun'),
 				'deskripsi' => Input::get('deskripsi')
-				));
+				);
+			$this->BukuModel->update($id,$data);
 		}else{
-			DB::table('buku')
-			->where('id_bk',$id)
-			->update(array(
+			$data = array(
 				'judul' => Input::get('judul'),
 				'harga' => Input::get('harga'),
 				'id_pen' => Input::get('penulis'),
 				'id_ktgr' => Input::get('kategori'),
 				'tahun' => Input::get('tahun'),
 				'deskripsi' => Input::get('deskripsi')
-				));
+				);
+			$this->BukuModel->update($id,$data);
 		}
 		
-
-		Session::flash('message', 'Kategori Telah Diperbarui');
+		Session::flash('notif', 'Buku Telah Diperbarui');
 		return Redirect::to('admin/buku/'.$id.'/edit');
-
-
 	}
 
 
@@ -172,8 +152,11 @@ class BukuController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy($id)
-	{
-		DB::table('buku')->where('id_bk',$id)->delete();
+	{	
+		$gambar = $this->BukuModel->nama_gambar($id);
+		File::delete('public/img/'.$gambar->gambar);
+		$this->BukuModel->hapus($id);
+		Session::flash('notif', 'Gambar Berhasil Dihapus');
 		return Redirect::to('admin/buku');
 	}
 

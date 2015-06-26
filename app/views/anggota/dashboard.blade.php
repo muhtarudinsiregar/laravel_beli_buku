@@ -9,11 +9,12 @@
 
 <div class="col-lg-9">
 	<?php if (Session::has('notif')): ?>
-	<div class="alert alert-danger">
+	<div class="alert alert-success">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<strong><?php echo Session::get('pesan'); ?></strong> Alert body ...
+		<strong><?php echo Session::get('notif'); ?></strong> Alert body ...
 	</div>
 <?php endif ?>
+<?php var_dump(Session::all()) ?>
 	<h4 class="text-center">Sejarah Transaksi</h4>
 	<table class="table table-bordered table-hover">
 		<thead align="center">

@@ -1,14 +1,16 @@
 @extends('layout/main')
-@section('title')
-{{ $title }}
-@stop
-@section('navbar')
-	@include('layout/admin_navbar')
+@section('sidebar')
+@include('layout.sidebar')
 @stop
 @section('content')
-<div class="row">
-	{{-- <div class="col-lg-3">Lorem ipsum dolor.</div> --}}
-	<div class="col-lg-12">
+	<div class="col-lg-9">
+		<?php if (Session::has('notif')): ?>
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<strong><?php echo Session::get('notif'); ?></strong>
+			</div>
+		<?php endif ?>
+		<a href="<?php echo URL::to('admin/buku/create'); ?>" class="btn btn-primary">Tambah Buku</a>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -21,24 +23,30 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($data as $value)
+				<?php foreach ($data as $value): ?>
 				<tr>
-					<td> <?php echo HTML::image('img/'.$value->gambar, 'gambar', array('width'=>'115','heigh'=>'162')) ?></td>
+					<td> 
+						<?php 
+							echo HTML::image('img/'.$value->gambar, 'gambar', array('width'=>'115','heigh'=>'162'))
+						?>
+					</td>
 					<td> <?php echo $value->judul  ; ?></td>
 					<td> <?php echo $value->penulis ; ?></td>
 					<td> <?php echo $value->kategori  ; ?></td>
 					<td> <?php echo $value->tahun  ; ?></td>
 					<td> 
-						{{ Form::open(array('url'=>route('admin.buku.destroy',$value->id_bk),'method'=>'delete','class'=>'form-inline')) }}
-						<a href="{{ URL::to('admin/buku/'.$value->id_bk.'/edit') }}" class="btn btn-primary">Ubah</a>
-						{{ Form::submit('Hapus', array('class'=>'btn btn-danger')) }}
-						{{ Form::close() }}
-
+						 <?php 
+						 	echo Form::open(array('url'=>route('admin.buku.destroy',$value->id_bk),'method'=>'delete','class'=>'form-inline'));
+						  ?>
+					<a href="<?php echo URL::to('admin/buku/'.$value->id_bk.'/edit'); ?>" class="btn btn-primary">Ubah</a>
+					<?php 
+						echo Form::submit('Hapus', array('class'=>'btn btn-danger'));
+						echo Form::close();
+					 ?>
 					</td>
 				</tr>
-				@endforeach
+				<?php endforeach ?>
 			</tbody>
 		</table>
 	</div>
-</div>
 @stop
