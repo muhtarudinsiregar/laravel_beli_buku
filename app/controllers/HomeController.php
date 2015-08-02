@@ -37,16 +37,15 @@ class HomeController extends BaseController {
 		return View::make('home/main',$data)->withTitle('');
 
 	}
+		// $data = [
+		// 'data'=>$this->home->Cari($keyword)
+		// ];
 
 	public function cari()
 	{
 		$keyword = Input::get('search');
-		// $data = ;
-		$data = [
-		'data'=>$this->home->Cari($keyword)
-		];
-		
-		return View::make('home/pencarian',$data)->withTitle('Pencarian');
+		$data = $this->home->Cari($keyword); 
+		return View::make('home/pencarian')->with('data',$data)->withTitle('Pencarian');
 	} //end func cari()
 
 	public function show($id)

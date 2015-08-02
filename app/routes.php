@@ -25,7 +25,7 @@ Route::get('/','HomeController@index');
 Route::group(array('before'=>'auth'),function(){
 	//route dengan prefix admin hanya boleh dimasuki oleh admin lalu terdapat filter hanya admin yang boleh masuk.
 	Route::group(array('prefix'=>'admin','before'=>'admin'), function(){
-		// route untuk crud  buku dengan resource
+		// route untuk crud  buku
 		Route::resource('buku', 'BukuController');
 // route untuk penulis
 		Route::resource('penulis','PenulisController');
@@ -36,7 +36,7 @@ Route::group(array('before'=>'auth'),function(){
 	Route::get('anggota/dashboard','AnggotaController@index');
 }); //end group auth
 //route untuk menampilkan isi keranjang 
-Route::get('keranjang','HomeController@keranjang');
+// Route::get('keranjang','HomeController@keranjang');
 //route menampilkan halaman login
 Route::get('login','LoginController@index');
 //route untuk autentifikasi user
@@ -44,8 +44,9 @@ Route::post('proses','LoginController@proses');
 // route logout
 Route::get('logout','LoginController@logout');
 // menampilkan halaman pendaftaran
+// Route::post('daftar','LoginController@daftar');
+
 Route::get('daftar','LoginController@daftar');
-Route::post('daftar','LoginController@daftar');
 // otentifikasi pendaftaran
 Route::post('daftar/validasi','LoginController@validasi');
 
@@ -57,8 +58,10 @@ Route::get('keranjang/konfirmasi', 'KeranjangController@konfirmasi');
 Route::resource('keranjang', 'KeranjangController');
 
 Route::get('kategori/{id}', 'HomeController@kategori_detail');
+
 Route::get('laporan', 'LaporanController@index');
 Route::post('export', 'LaporanController@exportPdf');
+
 Route::post('dompdf', 'LaporanController@dompdf');
 Route::get('generate',function(){
 	return View::make('laporan/tes');

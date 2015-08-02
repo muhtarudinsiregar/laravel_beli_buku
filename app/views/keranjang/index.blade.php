@@ -1,6 +1,7 @@
 @extends('layout/main')
 @section('content')
 <div class="row">
+<?php var_dump(Session::all()); ?>
         <table id="cart" class="table table-hover table-condensed">
             <thead>
                 <tr>

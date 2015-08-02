@@ -21,7 +21,9 @@ class LaporanController extends \BaseController
 	}
 
 	public function exportPdf()
-	{	$total 	= $this->laporan->get_total();
+	{	
+		// manggil fungsi dari model
+		$total 	= $this->laporan->get_total();
 		$data =array(
 			'data'=>$this->laporan->get_data_report(),
 			'total'=>number_format($total,0,',','.')
@@ -31,30 +33,5 @@ class LaporanController extends \BaseController
 		return $pdf->download('laporan.pdf');
 	}
 
-// 	public function dompdf()
-// 	{
-// 		require_once __DIR__.'/vendor/autoload.php';
-
-// // inhibit DOMPDF's auto-loader
-// define('DOMPDF_ENABLE_AUTOLOAD', false);
-
-// //include the DOMPDF config file (required)
-// require 'vendor/dompdf/dompdf/dompdf_config.inc.php';
-
-// //if you get errors about missing classes please also add:
-// require_once('vendor/dompdf/dompdf/include/autoload.inc.php');
-
-// 		$html =
-// 		'<html><body>'.
-// 		'<p>Put your html here, or generate it with your favourite '.
-// 		'templating system.</p>'.
-// 		'</body></html>';
-
-// 		$dompdf = new \DomPDF();
-// 		$dompdf->load_html($html);
-// 		$dompdf->render();
-// 		$dompdf->stream("sample.pdf");
-
-// 	}
 }
 ?>

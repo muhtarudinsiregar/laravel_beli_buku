@@ -16,14 +16,14 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-lg-12">
-				<?php echo Form::model($buku,array('url'=>route('admin.buku.update',['buku'=>$buku->id_bk]),'files'=>true,'class'=>'form-horizontal','method'=>'PUT')); ?>
-				<div class="row">
-					<div class="col-lg-5">	
-						<div class="form-group">
-							<label for="nama">Judul Buku</label>
-							<?php echo Form::text('judul', null, array('class' => 'form-control')); ?>
-						</div>
-					</div>
+<?php echo Form::model($buku,array('url'=>route('admin.buku.update',['buku'=>$buku->id_bk]),'files'=>true,'class'=>'form-horizontal','method'=>'PUT')); ?>
+<div class="row">
+	<div class="col-lg-5">	
+		<div class="form-group">
+			<label for="nama">Judul Buku</label>
+			<?php echo Form::text('judul', null, array('class' => 'form-control')); ?>
+		</div>
+	</div>
 					<div class="col-lg-5 col-md-offset-1">	
 						<div class="form-group">
 							<label for="nama">Harga Buku</label>

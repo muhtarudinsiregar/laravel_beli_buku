@@ -38,11 +38,13 @@
 						 <?php 
 						 	echo Form::open(array('url'=>route('admin.buku.destroy',$value->id_bk),'method'=>'delete','class'=>'form-inline'));
 						  ?>
-					<a href="<?php echo URL::to('admin/buku/'.$value->id_bk.'/edit'); ?>" class="btn btn-primary">Ubah</a>
-					<?php 
-						echo Form::submit('Hapus', array('class'=>'btn btn-danger'));
-						echo Form::close();
-					 ?>
+						  <?php 
+						  echo link_to('admin/buku/'.$value->id_bk.'/edit', 'Ubah', array('class'=>'btn btn-primary')); ?>
+					
+						<?php 
+							echo Form::submit('Hapus', array('class'=>'btn btn-danger'));
+							echo Form::close();
+						 ?>
 					</td>
 				</tr>
 				<?php endforeach ?>
